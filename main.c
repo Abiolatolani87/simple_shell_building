@@ -34,11 +34,25 @@ void print_dirs_in_path(void);
  */
 int main(void)
 {
-	list_t *head = path_list();
-	print_dirs_in_path();
-	printf("\n*******************************************\n");
-	print_list(head);
+	// list_t *head = path_list();
+	// print_dirs_in_path();
+	// printf("\n*******************************************\n");
+	// print_list(head);
+	// printf("Before setenv call: %p\n", *environ);
+	// setenv("FRESH", "tyvoiax", 1);
+	// setenv("EMMA", "so cool", 1);
+	// printf("After setenv call: %p\n", *environ);
+	// printf("%s\n", unsetenv("FRESH"));
+	// printf("After setenv call: %p\n", *environ);
+	// while (*environ)
+	// 	printf("%s\n", *environ++);
+	// *environ++ = "HEY=just trying";
+	// *environ == NULL;
 
+	// printf("After setenv call: %p\n", *environ);
+	// printf("After setenv call: %s\n", *--environ);
+	static char *curr = "static!";
+	printf("%s\n", curr);
 	return (0);
 }
 
@@ -239,4 +253,45 @@ void print_dirs_in_path(void)
 		value++;
 	}
 	putchar('\n');
+}
+
+int _setenv(const char *name, const char *value, int overwrite)
+{
+	int i = 0;
+	int environ_count = 0;
+	char *new_env_str = NULL;
+	char **new_environ = NULL;
+	/* calculate length of env variable. Two for '=' and '\0'*/
+	int new_env_var_len = strlen(name) + strlen(value) + 2;
+
+	if (!name || !value)
+		return (-1);
+	new_env_str = malloc(new_env_var_len);
+
+	if (!new_env_str)
+		return (-1);
+	snprintf(new_env_str, new_env_var_len, "%s=%s", name, value);
+	/* Loop through environ and check if an environment variable starts with name*/
+	while (environ[i])
+	{
+		if (strncmp(environ[i], name, strlen(name)) == 0)
+		{
+			if (!overwrite)
+				return (0);
+			else
+			{
+				strncpy(environ[i], new_env_str, new_env_var_len);
+				return (0);
+			}
+		}
+		i++;
+	}
+	/* Below line only executes if environment variable does not exist */
+	new_environ = realloc(environ, sizeof(char *) * environ_count);
+	if (!new_environ)
+		return (-1);
+	environ = new_environ;
+	environ[environ_count] = new_env_str;
+	environ[environ_count + 1] = NULL;
+	return (0);
 }
