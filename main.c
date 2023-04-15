@@ -295,3 +295,31 @@ int _setenv(const char *name, const char *value, int overwrite)
 	environ[environ_count + 1] = NULL;
 	return (0);
 }
+
+int _unsetenv(const char *name)
+{
+	int found = 0, i = 0;
+
+	while (environ[i])
+	{
+		if (strncmp(environ[i], name, strlen(name)) == 0)
+		{
+			free(environ[i]);
+			found = 1;
+			break;
+		}
+		i++;
+	}
+	if (found)
+	{
+		/* Move remaining environment variables back by 1 */
+		while (environ[i])
+		{
+			environ[i] = environ[i + 1];
+			i++;
+		}
+		return (0);
+	}
+	else
+		return (-1);
+}
