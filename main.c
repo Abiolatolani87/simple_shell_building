@@ -495,3 +495,20 @@ char **str_into_tokens(const char *str, char delim) /* Modify to accept head of 
 	 * free memory allocated for array of pointers
 	*/
 }
+
+/**
+ * CHECKPATH:
+ * readline and create argv
+ * check if argv[0] contains '/'
+ * 	if yes, pass argv[0] to _which, to check if it exist
+ * 		if it exist, return true
+ *		Return false
+ * 	else if argv[0] dosn't contain '/'
+ * 		get all dirs from path
+ * 		foreach dir in dirs
+ * 			add argv[0] to dir
+ * 			pass it to _which, to check if it exist
+ * 			if it exist, return true
+ *		Return false 
+ * 
+*/
