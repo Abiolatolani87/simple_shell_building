@@ -438,11 +438,11 @@ int _unsetenv(const char *name)
  * Add null to the array created
  * return the array of pointers (that will be argv for our shell )
 */
-char **str_into_tokens(const char *str, char delim)
+char **str_into_tokens(const char *str, char delim) /* Modify to accept head of list as parameter */
 {
 	char buffer[1024] = {0};
 	int i = 0;
-	list_t *head = NULL;
+	list_t *head = NULL; /* will be declared outside, so if can be freed dafter use*/
 
 	if (!str)
 		return (NULL);
