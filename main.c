@@ -170,6 +170,56 @@ list_t *add_node_end(list_t **head, const char *str)
 	return (temp);
 }
 
+/**
+ * list_len - returns the number of elements in a linked list_t list
+ * @h: pointer to the list
+ * Return: number of elements in the list
+ */
+size_t list_len(const list_t *h)
+{
+	size_t length = 0;
+	const list_t *temp = NULL;
+
+	if (!h)
+		return (length);
+	temp = h;
+	while (temp)
+	{
+		if (temp->str)
+			length++;
+		temp = temp->next;
+	}
+	return (length);
+}
+
+/**
+ * store_str_ptrs - store the addresses of all strings in the list
+ * @h: pointer to a list
+ * Return: array of pointers to string
+ */
+char **store_str_ptrs(const list_t *h, char **ptrs_to_str)
+{
+	const list_t *temp = NULL;
+	int i = 0;
+
+	if (!h)
+		return (NULL);
+
+	while (h)
+	{
+		if (h->str)
+		{
+			ptrs_to_str[i] = h->str;
+			i++;
+		}
+
+		h = h->next;
+	}
+	ptrs_to_str[i] = NULL;
+
+	return (ptrs_to_str);
+}
+
 int has_same_key(char *str, const char *substr);
 char *get_value(char *str);
 unsigned int key_len(char *str);
@@ -417,4 +467,18 @@ char **str_into_tokens(const char *str, char delim)
 	 * store address of string in each node in the created array
 	 * add NULL to the end
 	 * return array */
+
+	int list_length = list_len(head);
+	/* plus 1 to accomate the NULL */
+	char **ptr_to_tokens = malloc(sizeof(char *) * (list_length + 1));
+
+	store_str_ptrs(head, ptr_to_tokens);
+
+	return (ptr_to_tokens);
+
+	/**
+	 * AFTERUSE:
+	 * free memory allocated for list (call free list func)
+	 * free memory allocated for array of pointers
+	*/
 }
