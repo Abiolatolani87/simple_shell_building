@@ -27,6 +27,7 @@ void free_list(list_t *head);
 char *_getenv(const char *name);
 list_t *path_list();
 void print_dirs_in_path(void);
+char **str_into_tokens(const char *str, char delim);
 
 /**
  * main - prints
@@ -51,8 +52,17 @@ int main(void)
 
 	// printf("After setenv call: %p\n", *environ);
 	// printf("After setenv call: %s\n", *--environ);
-	static char *curr = "static!";
-	printf("%s\n", curr);
+	// static char *curr = "static!";
+	// printf("%s\n", curr);
+
+	const char *s = "  /biin/ls -l /tmp  ";
+	int i = 0;
+	char **strs = str_into_tokens(s, ' ');
+	while (strs[i] != NULL)
+	{
+		printf("%s\n", strs[i]);
+		i++;
+	}
 	return (0);
 }
 
@@ -442,9 +452,12 @@ char **str_into_tokens(const char *str, char delim)
 		/* look for first character that is not delimeter */
 		while (*str == delim)
 			str++;
-		
+		/* if the next character after skipping delim is '\0' or '\n' break from loop*/
+		if (*str == '\0' || *str == '\n')
+			break;
+
 		/* write characters upto next delimeter*/
-		while (*str != delim || *str != '\0' || *str != '\n')
+		while (*str != delim && *str != '\0' && *str != '\n')
 		{
 			buffer[i] = *str;
 			str++;
@@ -458,7 +471,6 @@ char **str_into_tokens(const char *str, char delim)
 		/* reset i for buffer reuse */
 		i = 0;
 		/* go to next character and repeat */
-		str++;
 	}
 	/**
 	 * TODO: 
@@ -469,6 +481,7 @@ char **str_into_tokens(const char *str, char delim)
 	 * return array */
 
 	int list_length = list_len(head);
+	printf("lenth of list: %d\n", list_length);
 	/* plus 1 to accomate the NULL */
 	char **ptr_to_tokens = malloc(sizeof(char *) * (list_length + 1));
 
