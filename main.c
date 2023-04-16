@@ -126,6 +126,50 @@ list_t *add_node(list_t **head, const char *str)
 	return (temp);
 }
 
+/**
+ * add_node_end - adds a new node at the end of a list_t list
+ * @head: pointer to head pointer to the list
+ * @str: pointer to the string to add
+ * Return: pointer to the new element
+ */
+list_t *add_node_end(list_t **head, const char *str)
+{
+	list_t *temp = NULL;
+	list_t *curr_node = NULL;
+
+	if (!str)
+		return (NULL);
+
+	temp = malloc(sizeof(list_t));
+
+	if (!temp)
+		return (NULL);
+
+	temp->str = strdup(str);
+
+	if (!temp->str)
+	{
+		free(temp);
+		return (NULL);
+	}
+
+	temp->len = (unsigned int)strlen(str);
+	temp->next = NULL;
+
+	if (!*head)
+	{
+		*head = temp;
+		return (temp);
+	}
+	curr_node = *head;
+
+	while (curr_node->next)
+		curr_node = curr_node->next;
+	curr_node->next = temp;
+
+	return (temp);
+}
+
 int has_same_key(char *str, const char *substr);
 char *get_value(char *str);
 unsigned int key_len(char *str);
@@ -322,4 +366,55 @@ int _unsetenv(const char *name)
 	}
 	else
 		return (-1);
+}
+
+/* split strings into tokens */
+/**
+ * create a list
+ * extact each token
+ * create a node with the token
+ * add node to end of list
+ * create array of pointers to each token in the list
+ * Add null to the array created
+ * return the array of pointers (that will be argv for our shell )
+*/
+char **str_into_tokens(const char *str, char delim)
+{
+	char buffer[1024] = {0};
+	int i = 0;
+	list_t *head = NULL;
+
+	if (!str)
+		return (NULL);
+	/* Extract tokens */
+	while (*str != '\0')
+	{
+		/* look for first character that is not delimeter */
+		while (*str == delim)
+			str++;
+		
+		/* write characters upto next delimeter*/
+		while (*str != delim || *str != '\0' || *str != '\n')
+		{
+			buffer[i] = *str;
+			str++;
+			i++;
+		}
+		buffer[i] = '\0';
+
+		/* add token to end of list */
+		add_node_end(&head, buffer);
+
+		/* reset i for buffer reuse */
+		i = 0;
+		/* go to next character and repeat */
+		str++;
+	}
+	/**
+	 * TODO: 
+	 * count nodes in list
+	 * create an array of pointers to strings of size list
+	 * store address of string in each node in the created array
+	 * add NULL to the end
+	 * return array */
 }
