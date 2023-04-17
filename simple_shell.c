@@ -12,21 +12,41 @@ int main(void)
 	char *line = NULL, *path_to_exec = NULL;
 	size_t len = 0;
 	ssize_t bytes_read = 0;
+	char **dir = NULL;
+	list_t *head = NULL;
+	char delim = ' ';
 
 	printf("#cisfun$ ");
 	while ((bytes_read = getline(&line, &len, stream)) != -1)
 	{
-		/* remove newline */
-		path_to_exec = malloc(sizeof(char) * strlen(line));
-		i = 0;
-		while (line[i] != '\n')
-		{
-			path_to_exec[i] = line[i];
-			i++;
-		}
-		path_to_exec[i] = '\0';
+		/**
+		 * TODO:-
+		 * Pass line read into custome tokenize function to break it down into tokens
+		 * 	Above line will return argv
+		 * pass first argv to check path function to check if path exist
+		 * 	if path does not exist
+		 * 		free the list
+		 * 		free argv
+		 * 		perror(argv[0]);
+				printf("#cisfun$ ");
+			else
 
-		char *argv[] = {path_to_exec, NULL};
+		*/
+
+		char **argv = str_into_tokens(line, delim, head);
+
+		    /* remove newline */
+		//     path_to_exec = malloc(sizeof(char) * strlen(line));
+		// i = 0;
+		// while (line[i] != '\n')
+		// {
+		// 	path_to_exec[i] = line[i];
+		// 	i++;
+		// }
+		// path_to_exec[i] = '\0';
+
+
+		// char *argv[] = {path_to_exec, NULL};
 
 		child_pid = fork();
 		if (child_pid == -1)

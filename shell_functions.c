@@ -392,11 +392,11 @@ int _unsetenv(const char *name)
  * Add null to the array created
  * return the array of pointers (that will be argv for our shell )
 */
-char **str_into_tokens(const char *str, char delim) /* Modify to accept head of list as parameter */
+char **str_into_tokens(const char *str, char delim, list_t *head)
 {
 	char buffer[1024] = {0};
 	int i = 0;
-	list_t *head = NULL; /* will be declared outside, so if can be freed dafter use*/
+	/* list_t *head = NULL; *//* will be declared outside, so if can be freed dafter use*/
 
 	if (!str)
 		return (NULL);
@@ -467,7 +467,7 @@ char **str_into_tokens(const char *str, char delim) /* Modify to accept head of 
  * 
 */
 
-int check_path(char *first_arg) /* Will probably pass dirs as a param for easy deallocation after use */
+int check_path(char *first_arg, char **dirs, list_t *head) /* Will probably pass dirs as a param for easy deallocation after use */
 {
 	if (has_forward_slash(first_arg))
 	{
@@ -484,7 +484,7 @@ int check_path(char *first_arg) /* Will probably pass dirs as a param for easy d
 	else
 	{
 		char *path = _getenv("PATH");
-		char **dirs = str_into_tokens(path, ':');
+		dirs = str_into_tokens(path, ':', head);
 		int i = 0;
 		int length = strlen(first_arg);
 

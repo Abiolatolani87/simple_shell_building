@@ -34,13 +34,13 @@ void free_list(list_t *head);
 char *_getenv(const char *name);
 list_t *path_list();
 void print_dirs_in_path(void);
-char **str_into_tokens(const char *str, char delim);
+char **str_into_tokens(const char *str, char delim, list_t *head);
 int has_same_key(char *str, const char *substr);
 char *get_value(char *str);
 unsigned int key_len(char *str);
 int path_exist(const char *str);
 int end_with_forward_slash(char *str);
 int has_forward_slash(char *str);
-int check_path(char *first_arg);
+int check_path(char *first_arg, char **dirs, list_t *head);
 
 #endif
