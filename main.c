@@ -1,36 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
-
-/**
- * struct list_s - singly linked list
- * @str: string - (malloc'ed string)
- * @len: length of the string
- * @next: points to the next node
- *
- * Description: singly linked list node structure
- */
-typedef struct list_s
-{
-	char *str;
-	unsigned int len;
-	struct list_s *next;
-} list_t;
-
-extern char **environ;
-
-size_t print_list(const list_t *h);
-size_t list_len(const list_t *h);
-list_t *add_node(list_t **head, const char *str);
-list_t *add_node_end(list_t **head, const char *str);
-void free_list(list_t *head);
-char *_getenv(const char *name);
-list_t *path_list();
-void print_dirs_in_path(void);
-char **str_into_tokens(const char *str, char delim);
+#include "main.h"
 
 /**
  * main - prints
@@ -39,7 +7,7 @@ char **str_into_tokens(const char *str, char delim);
 int main(void)
 {
 	// list_t *head = path_list();
-	// print_dirs_in_path();
+	print_dirs_in_path();
 	// printf("\n*******************************************\n");
 	// print_list(head);
 	// printf("Before setenv call: %p\n", *environ);
@@ -58,16 +26,16 @@ int main(void)
 	// static char *curr = "static!";
 	// printf("%s\n", curr);
 
-	const char *s = "  /biin/ls -l /tmp  ";
-	int i = 0;
-	char **strs = str_into_tokens(s, ' ');
-	while (strs[i] != NULL)
-	{
-		printf("%s\n", strs[i]);
-		i++;
-	}
-	// int a = 0 == 4;
-	// printf("a: %d\n", a);
+	// const char *s = "  /biin/ls -l /tmp  ";
+	// int i = 0;
+	// char **strs = str_into_tokens(s, ' ');
+	// while (strs[i] != NULL)
+	// {
+	// 	printf("%s\n", strs[i]);
+	// 	i++;
+	// }
+	int a = check_path("ls");
+	printf("a: %d\n", a);
 
 	return (0);
 }
@@ -235,10 +203,6 @@ char **store_str_ptrs(const list_t *h, char **ptrs_to_str)
 
 	return (ptrs_to_str);
 }
-
-int has_same_key(char *str, const char *substr);
-char *get_value(char *str);
-unsigned int key_len(char *str);
 
 /**
  * _getenv - gets an environment variable
@@ -535,8 +499,8 @@ int check_path(char *first_arg) /* Will probably pass dirs as a param for easy d
 	}
 	else
 	{
-		const *path = _getenv("PATH");
-		const **dirs = str_into_tokens(path, ':');
+		char *path = _getenv("PATH");
+		char **dirs = str_into_tokens(path, ':');
 		int i = 0;
 		int length = strlen(first_arg);
 
@@ -587,7 +551,7 @@ int end_with_forward_slash(char *str)
 	return (str[strlen(str) - 1] == '/');
 }
 
-int path_exist(char *str)
+int path_exist(const char *str)
 {
 	struct stat st;
 
