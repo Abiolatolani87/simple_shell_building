@@ -115,6 +115,30 @@ list_t *add_node_end(list_t **head, const char *str)
 }
 
 /**
+ * free_list - frees a list_t list
+ * @head: pointer to begining of list
+ */
+void free_list(list_t *head)
+{
+	list_t *curr_node = NULL;
+
+	if (!head)
+		return;
+
+	curr_node = head;
+
+	while (head->next)
+	{
+		head = head->next;
+		free(curr_node->str);
+		free(curr_node);
+		curr_node = head;
+	}
+	free(head->str);
+	free(head);
+}
+
+/**
  * list_len - returns the number of elements in a linked list_t list
  * @h: pointer to the list
  * Return: number of elements in the list
@@ -523,3 +547,12 @@ int path_exist(const char *str)
  * test implementation
  * write function to deallocate memory used.
 */
+
+void free_allocated_memory(list_t *head, char **strs)
+{
+	/* Free memory allocated for linked list. This also frees the memory array of pointers in strs points to */
+	free_list(head);
+
+	/* Free memory allocated for strs */
+	free(strs);
+}
