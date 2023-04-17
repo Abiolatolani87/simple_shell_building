@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 /**
  * struct list_s - singly linked list
@@ -63,6 +66,9 @@ int main(void)
 		printf("%s\n", strs[i]);
 		i++;
 	}
+	// int a = 0 == 4;
+	// printf("a: %d\n", a);
+
 	return (0);
 }
 
@@ -559,3 +565,31 @@ int check_path(char *first_arg) /* Will probably pass dirs as a param for easy d
  * implement end_with_forward_slash function
  * implement path_exist function
 */
+
+int has_forward_slash(char *str)
+{
+	if (!str)
+		return (0);
+	while (*str != '\0')
+	{
+		if (*str == '/')
+			return (1);
+		str++;
+	}
+	return (0);
+}
+
+int end_with_forward_slash(char *str)
+{
+	if (!str)
+		return (0);
+	/* check if last character in str is '/' */
+	return (str[strlen(str) - 1] == '/');
+}
+
+int path_exist(char *str)
+{
+	struct stat st;
+
+	return (stat(str, &st) == 0);
+}
