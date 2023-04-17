@@ -474,11 +474,11 @@ char **str_into_tokens(const char *str, char delim) /* Modify to accept head of 
 	}
 	/**
 	 * TODO: 
-	 * count nodes in list
-	 * create an array of pointers to strings of size list
-	 * store address of string in each node in the created array
-	 * add NULL to the end
-	 * return array */
+	 * count nodes in list - DONE
+	 * create an array of pointers to strings of size list - DONE
+	 * store address of string in each node in the created array - DONE
+	 * add NULL to the end - DONE
+	 * return array - DONE */
 
 	int list_length = list_len(head);
 	printf("lenth of list: %d\n", list_length);
@@ -502,7 +502,7 @@ char **str_into_tokens(const char *str, char delim) /* Modify to accept head of 
  * check if argv[0] contains '/'
  * 	if yes, pass argv[0] to _which, to check if it exist
  * 		if it exist, return true
- *		Return false
+ *		else return false
  * 	else if argv[0] dosn't contain '/'
  * 		get all dirs from path
  * 		foreach dir in dirs
@@ -511,4 +511,51 @@ char **str_into_tokens(const char *str, char delim) /* Modify to accept head of 
  * 			if it exist, return true
  *		Return false 
  * 
+*/
+
+int check_path(char *first_arg) /* Will probably pass dirs as a param for easy deallocation after use */
+{
+	if (has_forward_slash(first_arg))
+	{
+		if (end_with_forward_slash(first_arg))
+			return (0);
+		else
+		{
+			if (path_exist(first_arg))
+				return (1);
+			else
+				return (0);
+		}
+	}
+	else
+	{
+		const *path = _getenv("PATH");
+		const **dirs = str_into_tokens(path, ':');
+		int i = 0;
+		int length = strlen(first_arg);
+
+		while (dirs[i] != NULL)
+		{
+			/* Add first args to list. Plus 2 to accomodate '/' and '\0' */
+			dirs[i] = realloc(dirs[i], length + 2);
+			/* Add '/' first */
+			strcat(dirs[i], "/");
+			/* Add first arg */
+			strcat(dirs[i], first_arg);
+			/* Check each fullpath if it exists */
+			if (path_exist(dirs[i]))
+				return (1);
+
+			i++;
+		}
+		/* Path file does not exist */
+		return (0);
+	}
+}
+
+/**
+ * TODO:-
+ * implement has_forward_slash function
+ * implement end_with_forward_slash function
+ * implement path_exist function
 */
