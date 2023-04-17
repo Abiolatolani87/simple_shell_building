@@ -561,9 +561,9 @@ int check_path(char *first_arg) /* Will probably pass dirs as a param for easy d
 
 /**
  * TODO:-
- * implement has_forward_slash function
- * implement end_with_forward_slash function
- * implement path_exist function
+ * DONE: implement has_forward_slash function
+ * DONE: implement end_with_forward_slash function
+ * DONE: implement path_exist function
 */
 
 int has_forward_slash(char *str)
@@ -593,3 +593,9 @@ int path_exist(char *str)
 
 	return (stat(str, &st) == 0);
 }
+
+/**
+ * TODO:-
+ * test implementation
+ * write function to deallocate memory used.
+*/
