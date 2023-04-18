@@ -36,7 +36,7 @@ int main(void)
 
 		char **argv = str_into_tokens(line, delim, head);
 
-		    /* remove newline */
+		/* remove newline */
 		//     path_to_exec = malloc(sizeof(char) * strlen(line));
 		// i = 0;
 		// while (line[i] != '\n')
@@ -45,7 +45,6 @@ int main(void)
 		// 	i++;
 		// }
 		// path_to_exec[i] = '\0';
-
 
 		// char *argv[] = {path_to_exec, NULL};
 
@@ -75,6 +74,6 @@ int main(void)
 	}
 	free(line);
 	fclose(stream);
-	
+
 	return (0);
 }

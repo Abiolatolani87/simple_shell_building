@@ -13,68 +13,77 @@ int main(void)
 	size_t len = 0;
 	ssize_t bytes_read = 0;
 	char **dirs = NULL;
-	list_t *head = NULL;
+	list_t *head_path = NULL;
+	list_t *head_arvg = NULL;
 	char delim = ' ';
+	char *file_fullpath = NULL;
 
 	printf("#cisfun$ ");
 	while ((bytes_read = getline(&line, &len, stream)) != -1)
 	{
-		/**
-		 * TODO:-
-		 * Pass line read into custome tokenize function to break it down into tokens
-		 * 	Above line will return argv
-		 * pass first argv to check path function to check if path exist
-		 * 	if path does not exist
-		 * 		free the list
-		 * 		free argv
-		 * 		perror(argv[0]);
-				printf("#cisfun$ ");
-			else
-				replace argv[0] with the return of check_path
+		dirs = NULL;
+		head_path = NULL;
+		head_arvg = NULL;
+		file_fullpath = NULL;
 
-		*/
+		char **argv = str_into_tokens(line, delim, head_arvg);
+		// printf("argv[0]: %s\n", argv[0]);
+		/* check if file exist in PATH */
+		file_fullpath = check_path(argv[0], dirs, head_path);
+		// printf("After check path argv[0]: %s\n", argv[0]);
+		// printf("file full path: %s\n", file_fullpath);
 
-		char **argv = str_into_tokens(line, delim, head);
-
-		    /* remove newline */
-		//     path_to_exec = malloc(sizeof(char) * strlen(line));
-		// i = 0;
-		// while (line[i] != '\n')
-		// {
-		// 	path_to_exec[i] = line[i];
-		// 	i++;
-		// }
-		// path_to_exec[i] = '\0';
-
-
-		// char *argv[] = {path_to_exec, NULL};
-
-		child_pid = fork();
-		if (child_pid == -1)
+		if (file_fullpath == NULL)
 		{
-			perror("Error");
-			return (1);
-		}
-		if (child_pid == 0)
-		{
-			if (execve(argv[0], argv, environ) == -1)
-			{
-				perror(argv[0]);
-				printf("#cisfun$ ");
-			}
+			perror(argv[0]);
+			printf("#cisfun$ ");
 		}
 		else
 		{
-			if (wait(&status) == -1)
+			/* change argv[0] to point to fullpath */
+			argv[0] = file_fullpath;
+
+			/**
+			 * TEST:
+			*/
+			// printf("argv[0]: %s\n", argv[0]);
+			// printf("file fullpath: %s\n", file_fullpath);
+
+			child_pid = fork();
+			if (child_pid == -1)
 			{
 				perror("Error");
 				return (1);
 			}
-			printf("#cisfun$ ");
+			if (child_pid == 0)
+			{
+				if (execve(argv[0], argv, environ) == -1)
+				{
+					perror(argv[0]);
+					free_list(head_arvg);
+					// free(file_fullpath);
+					printf("#cisfun$ ");
+				}
+				
+				// free(file_fullpath);
+				// free(dirs);
+			}
+			else
+			{
+				if (wait(&status) == -1)
+				{
+					perror("Error");
+					return (1);
+				}
+				//free(file_fullpath);
+				free_list(head_arvg);
+				printf("2nd prompt #cisfun$ ");
+			}
 		}
 	}
+
 	free(line);
 	fclose(stream);
-	
+
 	return (0);
 }

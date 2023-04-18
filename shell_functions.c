@@ -48,7 +48,7 @@ list_t *add_node(list_t **head, const char *str)
 	if (!temp)
 		return (NULL);
 
-	temp->str = _strdup(str);
+	temp->str = strdup(str);
 
 	if (!temp->str)
 	{
@@ -89,7 +89,7 @@ list_t *add_node_end(list_t **head, const char *str)
 	if (!temp)
 		return (NULL);
 
-	temp->str = _strdup(str);
+	temp->str = strdup(str);
 
 	if (!temp->str)
 	{
@@ -167,7 +167,6 @@ size_t list_len(const list_t *h)
  */
 char **store_str_ptrs(const list_t *h, char **ptrs_to_str)
 {
-	const list_t *temp = NULL;
 	int i = 0;
 
 	if (!h)
@@ -435,11 +434,11 @@ char **str_into_tokens(const char *str, char delim, list_t *head)
 	 * return array - DONE */
 
 	int list_length = list_len(head);
-	
+
 	/* plus 1 to accomate the NULL */
 	char **ptr_to_tokens = malloc(sizeof(char *) * (list_length + 1));
 
-	store_str_ptrs(head, ptr_to_tokens);
+	ptr_to_tokens = store_str_ptrs(head, ptr_to_tokens);
 
 	return (ptr_to_tokens);
 
@@ -485,6 +484,12 @@ char *check_path(char *first_arg, char **dirs, list_t *head) /* Will change retu
 	{
 		char *path = _getenv("PATH");
 		dirs = str_into_tokens(path, ':', head);
+
+		// /********** TEST:*************/
+		// printf("BEFORE REALLOCATION\n");
+		// for (int i = 0; dirs[i] != NULL; i++)
+		// 	printf("dirs[%d] : length: %lu %s\n", i, strlen(dirs[i]), dirs[i]);
+
 		int i = 0;
 		int length = strlen(first_arg);
 		char *file_fullpath = NULL;
@@ -492,11 +497,23 @@ char *check_path(char *first_arg, char **dirs, list_t *head) /* Will change retu
 		while (dirs[i] != NULL)
 		{
 			/* Add first args to list. Plus 2 to accomodate '/' and '\0' */
-			dirs[i] = realloc(dirs[i], length + 2);
+			dirs[i] = realloc(dirs[i], strlen(dirs[i]) + length + 2);
+			/**
+			 * st = ls, length = 2
+			 * s = "dt" 2
+			 * s len = 6
+			 * dt/ls
+			*/
 			/* Add '/' first */
 			strcat(dirs[i], "/");
 			/* Add first arg */
 			strcat(dirs[i], first_arg);
+
+			// /********** TEST:*************/
+			// printf("AFTER REALLOCATION\n");
+			// for (int i = 0; dirs[i] != NULL; i++)
+			// 	printf("dirs[%d] : length: %lu %s\n", i, strlen(dirs[i]), dirs[i]);
+
 			/* Check each fullpath if it exists */
 			if (path_exist(dirs[i]))
 			{
@@ -505,7 +522,8 @@ char *check_path(char *first_arg, char **dirs, list_t *head) /* Will change retu
 				 * free head and dirs - No! will be freed in main
 				 * return duplicated string
 				*/
-				file_fullpath = _strdup(dirs[i]);
+				file_fullpath = strdup(dirs[i]);
+				// free_allocated_memory(head, dirs);
 
 				return (file_fullpath);
 			}
@@ -733,4 +751,15 @@ char *_strdup(const char *str)
 int _putchar(char c)
 {
 	return (write(1, &c, 1));
+}
+
+void print_env(void)
+{
+	int i = 0;
+
+	while (environ[i] != NULL)
+	{
+		printf("%s\n", environ[i]);
+		i++;
+	}
 }
