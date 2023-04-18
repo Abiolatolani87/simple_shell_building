@@ -48,7 +48,7 @@ list_t *add_node(list_t **head, const char *str)
 	if (!temp)
 		return (NULL);
 
-	temp->str = strdup(str);
+	temp->str = _strdup(str);
 
 	if (!temp->str)
 	{
@@ -89,7 +89,7 @@ list_t *add_node_end(list_t **head, const char *str)
 	if (!temp)
 		return (NULL);
 
-	temp->str = strdup(str);
+	temp->str = _strdup(str);
 
 	if (!temp->str)
 	{
@@ -396,7 +396,7 @@ char **str_into_tokens(const char *str, char delim, list_t *head)
 {
 	char buffer[1024] = {0};
 	int i = 0;
-	/* list_t *head = NULL; *//* will be declared outside, so if can be freed dafter use*/
+	/* list_t *head = NULL; */ /* will be declared outside, so if can be freed dafter use*/
 
 	if (!str)
 		return (NULL);
@@ -435,7 +435,7 @@ char **str_into_tokens(const char *str, char delim, list_t *head)
 	 * return array - DONE */
 
 	int list_length = list_len(head);
-	printf("lenth of list: %d\n", list_length);
+	
 	/* plus 1 to accomate the NULL */
 	char **ptr_to_tokens = malloc(sizeof(char *) * (list_length + 1));
 
@@ -467,18 +467,18 @@ char **str_into_tokens(const char *str, char delim, list_t *head)
  * 
 */
 
-int check_path(char *first_arg, char **dirs, list_t *head) /* Will probably pass dirs as a param for easy deallocation after use */
+char *check_path(char *first_arg, char **dirs, list_t *head) /* Will change return to the found file's fullpath */
 {
 	if (has_forward_slash(first_arg))
 	{
 		if (end_with_forward_slash(first_arg))
-			return (0);
+			return (NULL);
 		else
 		{
 			if (path_exist(first_arg))
-				return (1);
+				return (first_arg);
 			else
-				return (0);
+				return (NULL);
 		}
 	}
 	else
@@ -487,6 +487,7 @@ int check_path(char *first_arg, char **dirs, list_t *head) /* Will probably pass
 		dirs = str_into_tokens(path, ':', head);
 		int i = 0;
 		int length = strlen(first_arg);
+		char *file_fullpath = NULL;
 
 		while (dirs[i] != NULL)
 		{
@@ -498,12 +499,21 @@ int check_path(char *first_arg, char **dirs, list_t *head) /* Will probably pass
 			strcat(dirs[i], first_arg);
 			/* Check each fullpath if it exists */
 			if (path_exist(dirs[i]))
-				return (1);
+			{
+				/**
+				 * duplicate string
+				 * free head and dirs - No! will be freed in main
+				 * return duplicated string
+				*/
+				file_fullpath = _strdup(dirs[i]);
+
+				return (file_fullpath);
+			}
 
 			i++;
 		}
 		/* Path file does not exist */
-		return (0);
+		return (NULL);
 	}
 }
 
@@ -555,4 +565,172 @@ void free_allocated_memory(list_t *head, char **strs)
 
 	/* Free memory allocated for strs */
 	free(strs);
+}
+
+/* USE BELOW FUNCTIONS ONLY WHEN CHECKER DOESN'T ALLOW USE OF STRING LIBRARY FUNCTIONS */
+
+/**
+ * _strlen - calculates length of a string
+ * @s: pointer to string
+ * Return: length of the string
+ */
+int _strlen(char *s)
+{
+	int len = 0;
+
+	while (*s != '\0')
+	{
+		len++;
+		s++;
+	}
+
+	return (len);
+}
+
+/**
+ * _puts - prints the given string
+ * @str: pointer to the string to be printed
+ */
+void _puts(char *str)
+{
+	while (*str != '\0')
+	{
+		_putchar(*str);
+		str++;
+	}
+	_putchar('\n');
+}
+
+/**
+ * _strcpy - copy string from dest to src
+ * @dest: pointer to where string will be copied to
+ * @src: pointer to string to be copied
+ * Return: pointer to dest
+ */
+char *_strcpy(char *dest, char *src)
+{
+	int len = _strlen(src);
+	int i;
+
+	for (i = 0; i < len + 1; i++)
+		dest[i] = src[i];
+
+	return (dest);
+}
+
+/**
+ * _strncpy - concatenates two strings
+ * @dest: pointer to the  string to be added onto
+ * @src: pointer to the string to add
+ * @n: number of src to concate
+ * Return: pointer to the resulting string
+ */
+char *_strncpy(char *dest, char *src, int n)
+{
+	int i;
+
+	for (i = 0; *(src + i) != '\0' && i < n; i++)
+		dest[i] = src[i];
+
+	while (i < n)
+	{
+		dest[i] = '\0';
+		i++;
+	}
+
+	return (dest);
+}
+
+/**
+ * _strcat - concatenates two strings
+ * @dest: pointer to the  string to be added onto
+ * @src: pointer to the string to add
+ * Return: pointer to the resulting string
+ */
+char *_strcat(char *dest, char *src)
+{
+	int len = strlen(dest);
+	int i;
+
+	for (i = 0; *(src + i) != '\0'; i++)
+		dest[len + i] = src[i];
+	dest[len + i] = '\0';
+
+	return (dest);
+}
+
+/**
+ * _strncat - concatenates two strings
+ * @dest: pointer to the  string to be added onto
+ * @src: pointer to the string to add
+ * @n: number of src to concate
+ * Return: pointer to the resulting string
+ */
+char *_strncat(char *dest, char *src, int n)
+{
+	int len = _strlen(dest);
+	int i;
+
+	for (i = 0; *(src + i) != '\0' && i < n; i++)
+		dest[len + i] = src[i];
+	dest[len + i] = '\0';
+
+	return (dest);
+}
+
+/**
+ * _strcmp - compares two strings
+ * @s1: pointer to first string
+ * @s2: pointer to second string
+ * Return: neg value if s1 < s2, 0 if s1 = s2, pos value if s1 > s2
+ */
+int _strcmp(char *s1, char *s2)
+{
+	int i;
+	int same = 0;
+
+	for (i = 0; s1[i] != '\0' && s2[i] != '\0'; i++)
+	{
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
+	}
+	return (same);
+}
+
+/**
+ * _strdup - create duplicate string
+ * @str: pointer to string to duplicate
+ * Return: pointer to the duplicated string
+ */
+char *_strdup(const char *str)
+{
+	unsigned int i;
+	unsigned int len;
+	char *dup_str = NULL;
+
+	if (str == NULL)
+		return (NULL);
+
+	len = strlen(str) + 1;
+
+	dup_str = malloc(sizeof(char) * len);
+
+	if (dup_str != NULL)
+	{
+		for (i = 0; i < len; i++)
+			dup_str[i] = str[i];
+	}
+	return (dup_str);
+}
+
+/**
+ * _putchar - writes the character c to stdout
+ * @c: The character to print
+ *
+ * Return: On success 1.
+ * On error, -1 is returned, and errno is set appropriately.
+ */
+int _putchar(char c)
+{
+	return (write(1, &c, 1));
 }

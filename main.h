@@ -41,6 +41,14 @@ unsigned int key_len(char *str);
 int path_exist(const char *str);
 int end_with_forward_slash(char *str);
 int has_forward_slash(char *str);
-int check_path(char *first_arg, char **dirs, list_t *head);
+char *check_path(char *first_arg, char **dirs, list_t *head);
+int _strlen(char *s);
+char *_strdup(const char *str);
+char *_strcpy(char *dest, char *src);
+char *_strncpy(char *dest, char *src, int n);
+char *_strcat(char *dest, char *src);
+char *_strncat(char *dest, char *src, int n);
+int _strcmp(char *s1, char *s2);
+int _putchar(char c);
 
 #endif
