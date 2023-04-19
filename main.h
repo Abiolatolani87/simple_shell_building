@@ -46,10 +46,14 @@ char *check_path(char *first_arg, char **dirs, list_t *head);
 int _strlen(char *s);
 char *_strdup(const char *str);
 char *_strcpy(char *dest, char *src);
+int _unsetenv(const char *name);
+int _setenv(const char *name, const char *value, int overwrite);
 char *_strncpy(char *dest, char *src, int n);
 char *_strcat(char *dest, char *src);
 char *_strncat(char *dest, char *src, int n);
 int _strcmp(char *s1, char *s2);
 int _putchar(char c);
+int built_in(char *str, char **builtin);
+int count_strs(char **strs);
 
 #endif

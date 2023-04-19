@@ -315,7 +315,7 @@ void print_dirs_in_path(void)
 int _setenv(const char *name, const char *value, int overwrite)
 {
 	int i = 0;
-	int environ_count = 0;
+	int environ_count = count_strs(environ);
 	char *new_env_str = NULL;
 	char **new_environ = NULL;
 	/* calculate length of env variable. Two for '=' and '\0'*/
