@@ -39,9 +39,14 @@ int main(void)
 					perror("wrong argument count!!!");
 					
 				}
+				else if (argv_count == 1)
+				{
+					exit(0);
+				}
 				else
 				{
-					printf("correct number of tokens");
+					if (isDigit(argv[1]))
+					exit();
 				}
 			}
 			else if (_strcmp(argv[0], "setenv") == 0)

@@ -344,7 +344,15 @@ int _setenv(const char *name, const char *value, int overwrite)
 		i++;
 	}
 	/* Below line only executes if environment variable does not exist */
-	new_environ = realloc(environ, sizeof(char *) * environ_count);
+	new_environ = malloc(sizeof(char *) * (environ_count + 2));
+	
+	i = 0;
+	while(environ[i] != NULL)
+	{
+		new_environ[i] = environ[i];
+		i++;
+	}
+
 	if (!new_environ)
 		return (-1);
 	environ = new_environ;
