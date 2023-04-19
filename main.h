@@ -8,6 +8,7 @@
 #include <sys/wait.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <ctype.h>
 
 /**
  * struct list_s - singly linked list
@@ -47,6 +48,8 @@ int _strlen(char *s);
 char *_strdup(const char *str);
 char *_strcpy(char *dest, char *src);
 int _unsetenv(const char *name);
+int _atoi(char *s);
+int is_all_digits(char *s);
 int _setenv(const char *name, const char *value, int overwrite);
 char *_strncpy(char *dest, char *src, int n);
 char *_strcat(char *dest, char *src);

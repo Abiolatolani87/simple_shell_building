@@ -19,6 +19,7 @@ int main(void)
 	char *file_fullpath = NULL;
 	char *builtin[] = {"exit", "setenv", "unsetenv", "cd", NULL};
 	int argv_count = 0;
+	int exit_code;
 
 	printf("#cisfun$ ");
 	while ((bytes_read = getline(&line, &len, stream)) != -1)
@@ -45,8 +46,17 @@ int main(void)
 				}
 				else
 				{
-					if (isDigit(argv[1]))
-					exit();
+					if (is_all_digits(argv[1]))
+					{
+						exit_code = _atoi(argv[1]);
+						exit(exit_code);
+					}
+					else
+					{
+						printf("quitting with invalid");
+						exit(0);
+					}
+					
 				}
 			}
 			else if (_strcmp(argv[0], "setenv") == 0)
