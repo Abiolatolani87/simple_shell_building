@@ -17,9 +17,11 @@ int main(void)
 	list_t *head_arvg = NULL;
 	char delim = ' ';
 	char *file_fullpath = NULL;
-	char *builtin[] = {"exit", "setenv", "unsetenv", "cd", NULL};
+	char *builtin[] = {"exit", "setenv", "unsetenv", "cd", "getenv", NULL};
 	int argv_count = 0;
-	int exit_code;
+	int exit_code = 0;
+	char *env_value = NULL;
+	char *curr_dir = NULL;
 
 	printf("#cisfun$ ");
 	while ((bytes_read = getline(&line, &len, stream)) != -1)
@@ -96,10 +98,55 @@ int main(void)
 					printf("wrong argument count!!!");
 					
 				}
+				else if (argv_count == 2)
+				{
+					if (_strcmp(argv[1], "-") == 0)
+					{
+						curr_dir = _getenv("PWD");
+						env_value = _getenv("HOME");
+						
+						if (chdir(env_value) == -1)
+						{
+							perror(argv[0]);
+							perror(argv[1]);
+						}
+						else
+						{
+							_setenv("OLDPWD", curr_dir, 1);
+							_setenv("PWD", env_value, 1);
+						}
+					}
+					else
+					{
+						if (chdir(argv[1]) == -1)
+						{
+							perror(argv[0]);
+							perror(argv[1]);
+						}
+						else
+						{
+							_setenv("PWD", argv[1], 1);
+						}
+					}
+				}
 				else
 				{
-					printf("correct number of tokens");
+					env_value = _getenv("HOME");
+					if (chdir(env_value) == -1)
+					{
+						perror(argv[0]);
+						perror(argv[1]);
+					}
+					else
+					{
+						_setenv("PWD", env_value, 1);
+					}
+
 				}
+			}
+			else if (_strcmp(argv[0], "getenv") == 0)
+			{
+				printf("%s: %s\n", argv[1], _getenv(argv[1]));
 			}
 			printf("#cisfun$ ");
 			continue;
