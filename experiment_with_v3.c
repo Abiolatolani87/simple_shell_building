@@ -159,6 +159,8 @@ int main(void)
 		}
 		else
 		{
+			interpret_dollar(argv, status);
+
 			file_fullpath = check_path(argv[0], dirs, head_path);
 
 			if (file_fullpath == NULL)
