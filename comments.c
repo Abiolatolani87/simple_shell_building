@@ -8,3 +8,9 @@
                     (replace $$ with pid)
     2.2  else != 2 call getenv()
             (replace getenv with value/result)
+
+
+
+void interpret_$(char **str)
+{
+}
