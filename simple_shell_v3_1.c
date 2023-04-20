@@ -22,6 +22,7 @@ int main(void)
 	int exit_code = 0;
 	char *env_value = NULL;
 	char *curr_dir = NULL;
+	char *home_value = NULL;
 
 	printf("#cisfun$ ");
 	while ((bytes_read = getline(&line, &len, stream)) != -1)
@@ -32,7 +33,7 @@ int main(void)
 		file_fullpath = NULL;
 
 		char **argv = str_into_tokens(line, delim, head_arvg);
-		if(built_in(argv[0], builtin))
+		if (built_in(argv[0], builtin))
 		{
 			argv_count = count_strs(argv);
 			if (_strcmp(argv[0], "exit") == 0)
@@ -40,7 +41,6 @@ int main(void)
 				if (argv_count > 2)
 				{
 					perror("wrong argument count!!!");
-					
 				}
 				else if (argv_count == 1)
 				{
@@ -58,7 +58,6 @@ int main(void)
 						printf("quitting with invalid");
 						exit(0);
 					}
-					
 				}
 			}
 			else if (_strcmp(argv[0], "setenv") == 0)
@@ -66,7 +65,6 @@ int main(void)
 				if (argv_count != 3)
 				{
 					printf("wrong argument count!!!");
-					
 				}
 				else
 				{
@@ -81,7 +79,6 @@ int main(void)
 				if (argv_count != 2)
 				{
 					printf("wrong argument count!!!");
-					
 				}
 				else
 				{
@@ -93,18 +90,17 @@ int main(void)
 			}
 			else if (_strcmp(argv[0], "cd") == 0)
 			{
+				curr_dir = _strdup(_getenv("PWD"));
+				env_value = _strdup(_getenv("OLDPWD"));
+
 				if (argv_count > 2)
 				{
 					printf("wrong argument count!!!");
-					
 				}
 				else if (argv_count == 2)
 				{
 					if (_strcmp(argv[1], "-") == 0)
 					{
-						curr_dir = _getenv("PWD");
-						env_value = _getenv("HOME");
-						
 						if (chdir(env_value) == -1)
 						{
 							perror(argv[0]);
@@ -125,24 +121,28 @@ int main(void)
 						}
 						else
 						{
+							_setenv("OLDPWD", curr_dir, 1);
 							_setenv("PWD", argv[1], 1);
 						}
 					}
 				}
 				else
 				{
-					env_value = _getenv("HOME");
-					if (chdir(env_value) == -1)
+					home_value = _strdup(_getenv("HOME"));
+					if (chdir(home_value) == -1)
 					{
 						perror(argv[0]);
 						perror(argv[1]);
 					}
 					else
 					{
-						_setenv("PWD", env_value, 1);
+						_setenv("OLDPWD", curr_dir, 1);
+						_setenv("PWD", home_value, 1);
 					}
-
 				}
+				free(curr_dir);
+				free(env_value);
+				free(home_value);
 			}
 			else if (_strcmp(argv[0], "getenv") == 0)
 			{
@@ -188,7 +188,7 @@ int main(void)
 					// free(file_fullpath);
 					printf("#cisfun$ ");
 				}
-				
+
 				// free(file_fullpath);
 				// free(dirs);
 			}
