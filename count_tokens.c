@@ -14,5 +14,5 @@ int count_strs(char **strs)
 	{
 		i++;
 	}
-        return (i);
+	return (i);
 }
