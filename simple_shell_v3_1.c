@@ -122,6 +122,11 @@ int main(void)
 						else
 						{
 							_setenv("OLDPWD", curr_dir, 1);
+							/**
+							 * TODO:
+							 * call getcwd(buffer, size)
+							 * then set PWD with string in buffer
+							*/
 							_setenv("PWD", argv[1], 1);
 						}
 					}
