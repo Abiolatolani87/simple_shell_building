@@ -7,7 +7,7 @@
 int main(void)
 {
 	pid_t child_pid;
-	int status, i = 0;
+	int status = 0, i = 0;
 	FILE *stream = stdin;
 	char *line = NULL, *path_to_exec = NULL;
 	size_t len = 0;
