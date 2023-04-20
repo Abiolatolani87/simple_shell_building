@@ -23,13 +23,13 @@ void interpret_dollar(char **str, int status)
 		{
 			if (_strlen(str[i]) == 2)
 			{
-				if (str[i][0] == '?')
+				if (str[i][1] == '?')
 				{
 					new_str = itostr(status);
 					free(str[i]);
 					str[i] = new_str;
 				}
-				else if (str[i][0] == '$')
+				else if (str[i][1] == '$')
 				{
 					new_str = itostr(getpid());
 					free(str[i]);

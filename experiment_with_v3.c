@@ -159,7 +159,7 @@ int main(void)
 		}
 		else
 		{
-			interpret_dollar(argv, status);
+			interpret_dollar(argv, WIFEXITED(status));
 
 			file_fullpath = check_path(argv[0], dirs, head_path);
 
@@ -186,6 +186,8 @@ int main(void)
 						free_list(head_arvg);
 						exit(1);
 					}
+					else
+						exit (0);
 				}
 				else
 				{
