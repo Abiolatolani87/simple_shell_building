@@ -58,5 +58,8 @@ int _strcmp(char *s1, char *s2);
 int _putchar(char c);
 int built_in(char *str, char **builtin);
 int count_strs(char **strs);
+char *itostr(int n);
+int num_of_digits(unsigned int num);
+int _pow(int base, int exp);
 
 #endif

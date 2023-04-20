@@ -23,10 +23,11 @@ int main(void)
 	char *env_value = NULL;
 	char *curr_dir = NULL;
 	char *home_value = NULL;
+	char buffer[1024] = {0};
 
 	while (1)
 	{
-
+		printf("%s ", getcwd(buffer, 1024));
 		printf("#cisfun$ ");
 
 		if ((bytes_read = getline(&line, &len, stream)) == -1)
