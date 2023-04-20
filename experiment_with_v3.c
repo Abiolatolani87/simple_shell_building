@@ -24,15 +24,17 @@ int main(void)
 	char *curr_dir = NULL;
 	char *home_value = NULL;
 
-	printf("#cisfun$ ");
-	while ((bytes_read = getline(&line, &len, stream)) != -1)
+	while (1)
 	{
-		dirs = NULL;
-		head_path = NULL;
-		head_arvg = NULL;
-		file_fullpath = NULL;
 
+		printf("#cisfun$ ");
+
+		if ((bytes_read = getline(&line, &len, stream)) == -1)
+		{
+			return (0);
+		}
 		char **argv = str_into_tokens(line, delim, head_arvg);
+
 		if (built_in(argv[0], builtin))
 		{
 			argv_count = count_strs(argv);
@@ -153,62 +155,45 @@ int main(void)
 			{
 				printf("%s: %s\n", argv[1], _getenv(argv[1]));
 			}
-			printf("#cisfun$ ");
-			continue;
-		}
-		else
-		// printf("argv[0]: %s\n", argv[0]);
-		/* check if file exist in PATH */
-		file_fullpath = check_path(argv[0], dirs, head_path);
-		// printf("After check path argv[0]: %s\n", argv[0]);
-		// printf("file full path: %s\n", file_fullpath);
-
-		if (file_fullpath == NULL)
-		{
-			perror(argv[0]);
-			printf("#cisfun$ ");
 		}
 		else
 		{
-			/* change argv[0] to point to fullpath */
-			argv[0] = file_fullpath;
+			file_fullpath = check_path(argv[0], dirs, head_path);
 
-			/**
-			 * TEST:
-			*/
-			// printf("argv[0]: %s\n", argv[0]);
-			// printf("file fullpath: %s\n", file_fullpath);
-
-			child_pid = fork();
-			if (child_pid == -1)
+			if (file_fullpath == NULL)
 			{
-				perror("Error");
-				return (1);
-			}
-			if (child_pid == 0)
-			{
-				if (execve(argv[0], argv, environ) == -1)
-				{
-					perror(argv[0]);
-					free_list(head_arvg);
-					// free(file_fullpath);
-					// printf("#cisfun$ ");
-					exit(1);
-				}
-
-				// free(file_fullpath);
-				// free(dirs);
+				perror(argv[0]);
 			}
 			else
 			{
-				if (wait(&status) == -1)
+				/* change argv[0] to point to fullpath */
+				argv[0] = file_fullpath;
+
+				child_pid = fork();
+				if (child_pid == -1)
 				{
 					perror("Error");
 					return (1);
 				}
-				//free(file_fullpath);
-				free_list(head_arvg);
-				printf("2nd prompt #cisfun$ ");
+				if (child_pid == 0)
+				{
+					if (execve(argv[0], argv, environ) == -1)
+					{
+						perror(argv[0]);
+						free_list(head_arvg);
+						exit(1);
+					}
+				}
+				else
+				{
+					if (wait(&status) == -1)
+					{
+						perror("Error");
+						return (1);
+					}
+					//free(file_fullpath);
+					free_list(head_arvg);
+				}
 			}
 		}
 	}
