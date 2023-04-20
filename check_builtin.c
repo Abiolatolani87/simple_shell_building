@@ -10,12 +10,12 @@ int built_in(char *str, char **builtin)
 {
     int i = 0;
 
-    while(builtin[i] != NULL)
+    while (builtin[i] != NULL)
     {
-       if ((_strcmp(builtin[i], str)) == 0)
-       {
+        if ((_strcmp(builtin[i], str)) == 0)
+        {
             return (1);
-       }
+        }
 
         i++;
     }
