@@ -27,4 +27,4 @@ for argument in "$@" ; do
 done
 EOL
 chmod a+x betty
-mv betty /home/codespace/nvm/current/bin
+mv betty /home/codespace/.local/bin/betty
