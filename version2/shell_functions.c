@@ -571,8 +571,6 @@ int end_with_forward_slash(char *str)
 	return (str[strlen(str) - 1] == '/');
 }
 
-//ended here with function division
-
 int path_exist(const char *str)
 {
 	struct stat st;
