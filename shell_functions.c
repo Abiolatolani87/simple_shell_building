@@ -434,7 +434,7 @@ char **str_into_tokens(const char *str, char delim, list_t *head)
 		/* go to next character and repeat */
 	}
 	/**
-	 * TODO: 
+	 * TODO:
 	 * count nodes in list - DONE
 	 * create an array of pointers to strings of size list - DONE
 	 * store address of string in each node in the created array - DONE
@@ -470,8 +470,8 @@ char **str_into_tokens(const char *str, char delim, list_t *head)
  * 			add argv[0] to dir
  * 			pass it to _which, to check if it exist
  * 			if it exist, return true
- *		Return false 
- * 
+ *		Return false
+ *
 */
 
 char *check_path(char *first_arg, char **dirs, list_t *head) /* Will change return to the found file's fullpath */
@@ -570,6 +570,8 @@ int end_with_forward_slash(char *str)
 	/* check if last character in str is '/' */
 	return (str[strlen(str) - 1] == '/');
 }
+
+//ended here with function division
 
 int path_exist(const char *str)
 {
