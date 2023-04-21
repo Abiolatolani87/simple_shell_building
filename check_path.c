@@ -49,3 +49,4 @@ char *check_path(char *first_arg, char **dirs, list_t *head)
 		}
 		return (NULL);
 	}
+}

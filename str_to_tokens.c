@@ -38,6 +38,7 @@ char **str_into_tokens(const char *str, char delim, list_t *head)
 
 	int list_length = list_len(head);
 	char **ptr_to_tokens = malloc(sizeof(char *) * (list_length + 1));
-	ptr_to_tokens = store_str_ptrs(head, ptr_to_tokens);
+	//ptr_to_tokens = store_str_ptrs(head, ptr_to_tokens);
+	_strcpy(ptr_to_tokens, store_str_ptrs(head, ptr_to_tokens));
 	return (ptr_to_tokens);
 }
