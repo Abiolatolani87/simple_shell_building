@@ -61,6 +61,7 @@ int count_strs(char **strs);
 char *itostr(int n);
 int num_of_digits(unsigned int num);
 int _pow(int base, int exp);
+char **store_str_ptrs(const list_t *h, char **ptrs_to_str);
 void interpret_dollar(char **str, int status);
 
 #endif
