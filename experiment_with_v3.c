@@ -32,7 +32,8 @@ int main(void)
 
 		if ((bytes_read = getline(&line, &len, stream)) == -1)
 		{
-			return (0);
+			_putchar('\n');
+			exit(1);
 		}
 		char **argv = str_into_tokens(line, delim, head_arvg);
 
@@ -75,14 +76,15 @@ int main(void)
 			{
 				if (argv_count != 3)
 				{
-					perror(argv[0]);
-					exit(127);
+					fprintf(stderr, "%s:usage: %s VARIABLE VALUE\n", argv[0], argv[0]);
+					status = 127;
 				}
 				else
 				{
 					if ((_setenv(argv[1], argv[2], 1)) == -1)
 					{
-						printf("Setenv failed");
+						_puts("command invoked cannot execute");
+						status = 126;
 					}
 				}
 			}
@@ -90,13 +92,15 @@ int main(void)
 			{
 				if (argv_count != 2)
 				{
-					printf("wrong argument count!!!");
+					fprintf(stderr, "%s:usage: %s VARIABLE\n", argv[0], argv[0]);
+					status = 127;
 				}
 				else
 				{
 					if ((_unsetenv(argv[1])) == -1)
 					{
-						printf("Unsetenv failed");
+						_puts("command invoked cannot execute");
+						status = 126;
 					}
 				}
 			}
@@ -107,7 +111,8 @@ int main(void)
 
 				if (argv_count > 2)
 				{
-					printf("wrong argument count!!!");
+					fprintf(stderr, "%s:usage: %s [DIRECTORY]\n", argv[0], argv[0]);
+					status = 127;
 				}
 				else if (argv_count == 2)
 				{
@@ -168,13 +173,14 @@ int main(void)
 		}
 		else
 		{
-			interpret_dollar(argv, WIFEXITED(status));
+			interpret_dollar(argv, status);
 
 			file_fullpath = check_path(argv[0], dirs, head_path);
 
 			if (file_fullpath == NULL)
 			{
 				perror(argv[0]);
+				status = 127;
 			}
 			else
 			{
@@ -185,25 +191,22 @@ int main(void)
 				if (child_pid == -1)
 				{
 					perror("Error");
-					return (1);
+					exit(1);
 				}
 				if (child_pid == 0)
 				{
 					if (execve(argv[0], argv, environ) == -1)
 					{
 						perror(argv[0]);
-						free_list(head_arvg);
 						exit(1);
 					}
-					else
-						exit (0);
 				}
 				else
 				{
 					if (wait(&status) == -1)
 					{
 						perror("Error");
-						return (1);
+						exit(1);
 					}
 					//free(file_fullpath);
 					free_list(head_arvg);
