@@ -43,10 +43,15 @@ int main(void)
 			{
 				if (argv_count > 2)
 				{
-					perror("wrong argument count!!!");
+					newputs("exit");
+					newputs("bash: exit: ");
+					newputs(argv[1]);
+					_puts(": wrong argument count");
+					exit(2);
 				}
 				else if (argv_count == 1)
 				{
+					_puts("exit");
 					exit(0);
 				}
 				else
@@ -58,8 +63,11 @@ int main(void)
 					}
 					else
 					{
-						printf("quitting with invalid");
-						exit(0);
+						_puts("exit");
+						newputs("bash: exit: ");
+						newputs(argv[1]);
+						newputs(": numeric argument required");
+						exit(2);
 					}
 				}
 			}
@@ -67,7 +75,8 @@ int main(void)
 			{
 				if (argv_count != 3)
 				{
-					printf("wrong argument count!!!");
+					perror(argv[0]);
+					exit(127);
 				}
 				else
 				{
