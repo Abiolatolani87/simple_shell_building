@@ -66,12 +66,12 @@ int _pow(int base, int exp);
 char **store_str_ptrs(const list_t *h, char **ptrs_to_str);
 void interpret_dollar(char **str, int status);
 void create_child_process(int *status, char **argv);
-void execute_builtin_cmd(char **argv, int *status, char *line, list_t *head_argv);
+void execute_builtin_cmd(char **argv, int *status, char *line, list_t *head_argv, FILE *stream);
 void handle_cd(int argv_count, char **argv, int *status);
-void handle_exit(int argv_count, char **argv, char *line, list_t *head_argv);
+void handle_exit(int argv_count, char **argv, char *line, list_t *head_argv, FILE *stream);
 void handle_setenv(int argv_count, char **argv, int *status);
 void handle_unsetenv(int argv_count, char **argv, int *status);
 void prompt_user(void);
-void free_resources(char *line, list_t *head_argv, char **argv);
+void free_resources(char *line, list_t *head_argv, char **argv, FILE *stream);
 
 #endif

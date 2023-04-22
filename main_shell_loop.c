@@ -30,7 +30,7 @@ int main(void)
 
 		if (built_in(argv[0], builtin))
 		{
-			execute_builtin_cmd(argv, &status, line, head_arvg);
+			execute_builtin_cmd(argv, &status, line, head_arvg, stream);
 		}
 		else
 		{

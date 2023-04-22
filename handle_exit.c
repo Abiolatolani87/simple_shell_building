@@ -1,6 +1,6 @@
 #include "main.h"
 
-void handle_exit(int argv_count, char **argv, char *line, list_t *head_argv)
+void handle_exit(int argv_count, char **argv, char *line, list_t *head_argv, FILE *stream)
 {
 	int exit_code = 0;
 
@@ -15,7 +15,7 @@ void handle_exit(int argv_count, char **argv, char *line, list_t *head_argv)
 	else if (argv_count == 1)
 	{
 		_puts("exit");
-		free_resources(line, head_argv, argv);
+		free_resources(line, head_argv, argv, stream);
 		exit(0);
 	}
 	else
