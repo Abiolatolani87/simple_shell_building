@@ -44,4 +44,7 @@ void create_child_process(int *status, char **argv)
 			}
 		}
 	}
+	free(argv[0]);
+	free_list(head_path);
+	free(dirs);
 }
