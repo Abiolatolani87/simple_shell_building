@@ -1,13 +1,13 @@
 #include "main.h"
 
-void execute_builtin_cmd(char **argv, int *status)
+void execute_builtin_cmd(char **argv, int *status, char *line, list_t *head_argv)
 {
 	int argv_count = 0;
 
 	argv_count = count_strs(argv);
 	if (_strcmp(argv[0], "exit") == 0)
 	{
-		handle_exit(argv_count, argv);
+		handle_exit(argv_count, argv, line, head_argv);
 	}
 	else if (_strcmp(argv[0], "setenv") == 0)
 	{

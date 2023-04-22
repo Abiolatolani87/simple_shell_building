@@ -30,7 +30,7 @@ int main(void)
 
 		if (built_in(argv[0], builtin))
 		{
-			execute_builtin_cmd(argv, &status);
+			execute_builtin_cmd(argv, &status, line, head_arvg);
 		}
 		else
 		{
@@ -44,5 +44,3 @@ int main(void)
 
 	return (0);
 }
-
-void fre_resources(char *line, list_t *head_argv, char **argv)

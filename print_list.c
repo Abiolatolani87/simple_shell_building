@@ -10,6 +10,7 @@ size_t print_list(const list_t *h)
 {
 	size_t length = 0;
 	const list_t *temp = NULL;
+	char *num = NULL;
 
 	if (!h)
 		return (length);
@@ -18,11 +19,16 @@ size_t print_list(const list_t *h)
 	{
 		length++;
 		if (temp->str)
+		{
+			num = itostr(temp->len);
 			//printf("[%u] %s\n", temp->len, temp->str);
 			newputs("[");
-			newputs(temp->len);
+			newputs(num);
 			newputs("] ");
 			_puts(temp->str);
+
+			free(num);
+		}
 		else
 			//printf("[0] (nil)\n");
 			_puts("[0] (nil)");

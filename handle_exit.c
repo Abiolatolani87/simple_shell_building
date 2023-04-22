@@ -1,6 +1,6 @@
 #include "main.h"
 
-void handle_exit(int argv_count, char **argv)
+void handle_exit(int argv_count, char **argv, char *line, list_t *head_argv)
 {
 	int exit_code = 0;
 
@@ -15,6 +15,7 @@ void handle_exit(int argv_count, char **argv)
 	else if (argv_count == 1)
 	{
 		_puts("exit");
+		free_resources(line, head_argv, argv);
 		exit(0);
 	}
 	else

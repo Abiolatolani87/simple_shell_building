@@ -12,6 +12,8 @@
 char **str_into_tokens(const char *str, char delim, list_t *head)
 {
 	char buffer[1024] = {0};
+	int list_length = 0;
+	char **ptr_to_tokens;
 	int i = 0;
 
 	if (!str)
@@ -36,8 +38,8 @@ char **str_into_tokens(const char *str, char delim, list_t *head)
 		i = 0;
 	}
 
-	int list_length = list_len(head);
-	char **ptr_to_tokens = malloc(sizeof(char *) * (list_length + 1));
+	list_length = list_len(head);
+	ptr_to_tokens = malloc(sizeof(char *) * (list_length + 1));
 	ptr_to_tokens = store_str_ptrs(head, ptr_to_tokens);
 	
 	return (ptr_to_tokens);

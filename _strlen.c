@@ -5,8 +5,8 @@
  * @s: pointer to string
  * Return: length of the string
  */
- 
-int _strlen(char *s)
+
+int _strlen(const char *s)
 {
 	int len = 0;
 

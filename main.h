@@ -46,9 +46,9 @@ int path_exist(const char *str);
 int end_with_forward_slash(char *str);
 int has_forward_slash(char *str);
 char *check_path(char *first_arg, char **dirs, list_t *head);
-int _strlen(char *s);
+int _strlen(const char *s);
 char *_strdup(const char *str);
-char *_strcpy(char *dest, char *src);
+char *_strcpy(char *dest, const char *src);
 int _unsetenv(const char *name);
 int _atoi(char *s);
 int is_all_digits(char *s);
@@ -66,11 +66,12 @@ int _pow(int base, int exp);
 char **store_str_ptrs(const list_t *h, char **ptrs_to_str);
 void interpret_dollar(char **str, int status);
 void create_child_process(int *status, char **argv);
-void execute_builtin_cmd(char **argv, int *status);
+void execute_builtin_cmd(char **argv, int *status, char *line, list_t *head_argv);
 void handle_cd(int argv_count, char **argv, int *status);
-void handle_exit(int argv_count, char **argv);
+void handle_exit(int argv_count, char **argv, char *line, list_t *head_argv);
 void handle_setenv(int argv_count, char **argv, int *status);
 void handle_unsetenv(int argv_count, char **argv, int *status);
 void prompt_user(void);
+void free_resources(char *line, list_t *head_argv, char **argv);
 
 #endif
