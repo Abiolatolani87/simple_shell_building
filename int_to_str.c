@@ -31,38 +31,3 @@ char *itostr(int n)
 
 	return (str);
 }
-
-/**
- * num_of_digits - count digits in n
- * @num: number to count
- * Return: number of dogits
- */
-int num_of_digits(unsigned int num)
-{
-	unsigned int n = num;
-	int digits = 1;
-
-	while (n >= 10)
-	{
-		n /= 10;
-		digits++;
-	}
-	return (digits);
-}
-
-/**
- * _pow - calculate power of base, exponent
- * @base: base of power
- * @exp: exponent of power
- * Return: power of base and exp
- */
-int _pow(int base, int exp)
-{
-	int res = 1;
-	int i;
-
-	for (i = 0; i < exp; i++)
-		res *= base;
-
-	return (res);
-}
