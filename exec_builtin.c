@@ -11,15 +11,15 @@ void execute_builtin_cmd(char **argv, int *status)
 	}
 	else if (_strcmp(argv[0], "setenv") == 0)
 	{
-		handle_setenv(argv_count, argv, &status);
+		handle_setenv(argv_count, argv, status);
 	}
 	else if (_strcmp(argv[0], "unsetenv") == 0)
 	{
-		handle_unsetenv(argv_count, argv, &status);
+		handle_unsetenv(argv_count, argv, status);
 	}
 	else if (_strcmp(argv[0], "cd") == 0)
 	{
-		handle_cd(argv_count, argv, &status);
+		handle_cd(argv_count, argv, status);
 	}
 	else if (_strcmp(argv[0], "getenv") == 0)
 	{

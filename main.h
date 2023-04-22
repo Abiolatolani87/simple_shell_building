@@ -65,5 +65,12 @@ int num_of_digits(unsigned int num);
 int _pow(int base, int exp);
 char **store_str_ptrs(const list_t *h, char **ptrs_to_str);
 void interpret_dollar(char **str, int status);
+void create_child_process(int *status, char **argv);
+void execute_builtin_cmd(char **argv, int *status);
+void handle_cd(int argv_count, char **argv, int *status);
+void handle_exit(int argv_count, char **argv);
+void handle_setenv(int argv_count, char **argv, int *status);
+void handle_unsetenv(int argv_count, char **argv, int *status);
+void prompt_user(void);
 
 #endif

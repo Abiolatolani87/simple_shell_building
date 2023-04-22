@@ -7,14 +7,14 @@ void create_child_process(int *status, char **argv)
 	char *file_fullpath = NULL;
 	pid_t child_pid;
 
-	interpret_dollar(argv, status);
+	interpret_dollar(argv, *status);
 
 	file_fullpath = check_path(argv[0], dirs, head_path);
 
 	if (file_fullpath == NULL)
 	{
 		perror(argv[0]);
-		status = 127;
+		*status = 127;
 	}
 	else
 	{
@@ -37,7 +37,7 @@ void create_child_process(int *status, char **argv)
 		}
 		else
 		{
-			if (wait(&status) == -1)
+			if (wait(status) == -1)
 			{
 				perror("Error");
 				exit(1);
