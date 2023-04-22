@@ -12,13 +12,13 @@ void print_dirs_in_path(void)
 	{
 		if (*value == ':')
 		{
-			putchar('\n');
+			_putchar('\n');
 		}
 		else
 		{
-			putchar(*value);
+			_putchar(*value);
 		}
 		value++;
 	}
-	putchar('\n');
+	_putchar('\n');
 }
