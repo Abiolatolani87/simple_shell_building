@@ -15,7 +15,7 @@ int _setenv(const char *name, const char *value, int overwrite)
 	int environ_count = count_strs(environ);
 	char *new_env_str = NULL;
 	char **new_environ = NULL;
-	int new_env_var_len = strlen(name) + strlen(value) + 2;
+	int new_env_var_len = _strlen(name) + _strlen(value) + 2;
 
 	if (!name || !value)
 		return (-1);
@@ -23,10 +23,14 @@ int _setenv(const char *name, const char *value, int overwrite)
 
 	if (!new_env_str)
 		return (-1);
-	snprintf(new_env_str, new_env_var_len, "%s=%s", name, value);
+	/* snprintf(new_env_str, new_env_var_len, "%s=%s", name, value); */
+	_strcpy(new_env_str, name);
+	_strcpy(new_env_str, "=");
+	_strcpy(new_env_str, value);
+
 	while (environ[i])
 	{
-		if (strncmp(environ[i], name, strlen(name)) == 0)
+		if (strncmp(environ[i], name, _strlen(name)) == 0)
 		{
 			if (!overwrite)
 				return (0);
