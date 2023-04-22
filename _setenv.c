@@ -33,6 +33,7 @@ int _setenv(const char *name, const char *value, int overwrite)
 			else
 			{
 				strncpy(environ[i], new_env_str, new_env_var_len);
+				free(new_env_str);
 				return (0);
 			}
 		}
@@ -52,5 +53,8 @@ int _setenv(const char *name, const char *value, int overwrite)
 	environ = new_environ;
 	environ[environ_count] = new_env_str;
 	environ[environ_count + 1] = NULL;
+
+	free(new_env_str);
+
 	return (0);
 }

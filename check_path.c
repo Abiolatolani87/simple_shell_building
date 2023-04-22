@@ -41,7 +41,7 @@ char *check_path(char *first_arg, char **dirs, list_t *head)
 
 			if (path_exist(dirs[i]))
 			{
-				file_fullpath = strdup(dirs[i]);
+				file_fullpath = _strdup(dirs[i]);
 				return (file_fullpath);
 			}
 

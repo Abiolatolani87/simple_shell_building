@@ -15,8 +15,9 @@ int main(void)
 	char delim = ' ';
 	char *builtin[] = {"exit", "setenv", "unsetenv", "cd", "getenv", NULL};
 	list_t *head_arvg = NULL;
+	char **argv = NULL;
 
-	while (1)
+	    while (1)
 	{
 		prompt_user();
 
@@ -25,7 +26,7 @@ int main(void)
 			_putchar('\n');
 			exit(1);
 		}
-		char **argv = str_into_tokens(line, delim, head_arvg);
+		argv = str_into_tokens(line, delim, head_arvg);
 
 		if (built_in(argv[0], builtin))
 		{
@@ -35,9 +36,13 @@ int main(void)
 		{
 			create_child_process(&status, argv);
 		}
+		free_list(head_arvg);
+		free(argv);
 	}
 	free(line);
 	fclose(stream);
 
 	return (0);
 }
+
+void fre_resources(char *line, list_t *head_argv, char **argv)
