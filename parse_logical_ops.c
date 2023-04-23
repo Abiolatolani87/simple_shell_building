@@ -1,52 +1,16 @@
 #include "main.h"
 
 /**
- * op_found = false
- * token_started = false
- *
- * while not at the end
- *      if cur char and next char is &&
- *              set op_found to true
- *              op = &&
- *      else if cur char and next char is ||
- *              set op_found to true
- *              op = ||
- *
- *      if op_found and token not started or op_found and next char is '\0'
- *              if list created
- *                      free list
- *              exit
- *      else if op_found and token started and next char is not '\0'
- *              add '\0' to token buffer
- *              add token to token list
- *              add op to op list
- *              set token started to false
- *              set op_found to false
- *              i += 2
- *
- *      else if token started and op not found and next char is '\0'
- *              add '\0' to token buffer
- *              add token to token list
- *              i++
- *      else if token started and op not found and next char is not '\0'
- *              add cur char to token buffer
- *              i++
- *      else
- *              set token started to true
- *              add cur char to token buffer
- *              i++
- */
-
-/**
  * parse_logical_ops - tokenize string by && and ||
  * @str: pointer to string to tokenize
+ * @status: exit code
  * Return: pointer to tokenized string
 */
-cmd_ops *parse_logical_ops(char *str, int *status, cmd_ops *ptr_to_cmd_and_ops)
+cmd_ops *parse_logical_ops(char *str, int *status)
 {
 	int op_found = 0;
 	int token_started = 0;
-	int i = 0;
+	int i = 0, tokens_list_len = 0, ops_list_len = 0;
 	char *op_str = NULL;
 	char token_buffer[1024] = {0};
 	int buffer_index = 0;
@@ -54,6 +18,7 @@ cmd_ops *parse_logical_ops(char *str, int *status, cmd_ops *ptr_to_cmd_and_ops)
 	list_t *ops_head = NULL;
 	char **ptr_to_cmd_tokens = NULL;
 	char **ptr_to_ops_tokens = NULL;
+	cmd_ops *ptr_to_cmd_and_ops = NULL;
 
 	while (str[i] != '\0')
 	{
@@ -75,8 +40,8 @@ cmd_ops *parse_logical_ops(char *str, int *status, cmd_ops *ptr_to_cmd_and_ops)
 			if (ops_head)
 				free_list(ops_head);
 
-			_puts("bash: syntax error");
-			*status = 127;
+			// _puts("bash: syntax error");
+			// *status = 127;
 
 			return (NULL);
 		}
@@ -92,6 +57,8 @@ cmd_ops *parse_logical_ops(char *str, int *status, cmd_ops *ptr_to_cmd_and_ops)
 		}
 		else if (token_started && !op_found && str[i + 1] == '\0')
 		{
+			token_buffer[buffer_index] = str[i];
+			buffer_index++;
 			token_buffer[buffer_index] = '\0';
 			add_node_end(&tokens_head, token_buffer);
 			token_started = 0;
@@ -104,6 +71,7 @@ cmd_ops *parse_logical_ops(char *str, int *status, cmd_ops *ptr_to_cmd_and_ops)
 			buffer_index++;
 			i++;
 		}
+
 		else
 		{
 			token_started = 1;
@@ -112,6 +80,14 @@ cmd_ops *parse_logical_ops(char *str, int *status, cmd_ops *ptr_to_cmd_and_ops)
 			i++;
 		}
 	}
+
+	ptr_to_cmd_and_ops = malloc(sizeof(cmd_ops));
+
+	tokens_list_len = list_len(tokens_head);
+	ops_list_len = list_len(ops_head);
+
+	ptr_to_cmd_tokens = malloc(sizeof(char *) * (tokens_list_len + 1));
+	ptr_to_ops_tokens = malloc(sizeof(char *) * (ops_list_len + 1));
 	ptr_to_cmd_and_ops->cmd_tokens = store_str_ptrs(tokens_head, ptr_to_cmd_tokens);
 	ptr_to_cmd_and_ops->ops_tokens = store_str_ptrs(ops_head, ptr_to_ops_tokens);
 

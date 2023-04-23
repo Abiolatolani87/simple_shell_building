@@ -59,8 +59,8 @@ char **parse_semicolon(char *str, int *status, list_t *head)
 		return (NULL);
 	if (starts_with_semicolon(str) || has_consecutive_semicolon(str))
 	{
-		_puts("bash: syntax error");
-		*status = 127;
+		// _puts("bash: syntax error");
+		// *status = 127;
 
 		return (NULL);
 	}

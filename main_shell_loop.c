@@ -16,6 +16,7 @@ int main(int ac, char **av)
 	char *builtin[] = {"exit", "setenv", "unsetenv", "cd", "getenv", NULL};
 	list_t *head_arvg = NULL, *head_main = NULL;
 	char **argv = NULL, **strs_split_by_semicolon = NULL;
+	cmd_ops *ptr_to_cmd_ops = NULL;
 
 	(void)ac;
 
@@ -41,10 +42,27 @@ int main(int ac, char **av)
 		}
 		while (strs_split_by_semicolon[i] != NULL)
 		{
-			printf("sep by semi: %s\n", strs_split_by_semicolon[i]);
+			ptr_to_cmd_ops = parse_logical_ops(strs_split_by_semicolon[i], &status);
+
+			if (!ptr_to_cmd_ops || !ptr_to_cmd_ops->cmd_tokens || !*(ptr_to_cmd_ops->cmd_tokens))
+			{
+				newputs(av[0]);
+				_puts(": Could not parse command");
+				status = 127;
+				break;
+			}
+			while (*ptr_to_cmd_ops->cmd_tokens != NULL)
+			{
+				printf("str: %s\n", *(ptr_to_cmd_ops->cmd_tokens)++);
+			}
+			while (*ptr_to_cmd_ops->ops_tokens != NULL)
+			{
+				printf("str: %s\n", *(ptr_to_cmd_ops->ops_tokens)++);
+			}
+
 			i++;
 		}
-		/*return (1);*/
+		return (1);
 
 		argv = str_into_tokens(line, delim, head_arvg);
 
