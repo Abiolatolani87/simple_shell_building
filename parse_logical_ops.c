@@ -83,8 +83,8 @@ cmd_ops *parse_logical_ops(char *str, int *status, cmd_ops *ptr_to_cmd_and_ops)
 		else if (op_found && token_started && str[i + 2] != '\0')
 		{
 			token_buffer[buffer_index] = '\0';
-			add_node_end(tokens_head, token_buffer);
-			add_node_end(ops_head, op_str);
+			add_node_end(&tokens_head, token_buffer);
+			add_node_end(&ops_head, op_str);
 			token_started = 0;
 			op_found = 0;
 			i += 2;
@@ -93,7 +93,7 @@ cmd_ops *parse_logical_ops(char *str, int *status, cmd_ops *ptr_to_cmd_and_ops)
 		else if (token_started && !op_found && str[i + 1] == '\0')
 		{
 			token_buffer[buffer_index] = '\0';
-			add_node_end(tokens_head, token_buffer);
+			add_node_end(&tokens_head, token_buffer);
 			token_started = 0;
 			buffer_index = 0;
 			i++;

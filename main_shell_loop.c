@@ -26,6 +26,9 @@ int main(void)
 			_putchar('\n');
 			exit(1);
 		}
+		if (line == NULL || *line == '\n')
+			continue;
+
 		argv = str_into_tokens(line, delim, head_arvg);
 
 		if (built_in(argv[0], builtin))
