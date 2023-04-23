@@ -24,16 +24,16 @@ int main(int ac, char **av)
 	{
 		prompt_user();
 
-		if ((bytes_read = getline(&line, &len, stream)) == -1)
+		if ((bytes_read = getline(&line, &len, stream)) == -1) //check if getline executed unsuccessfully
 		{
 			_putchar('\n');
 			exit(1);
 		}
-		if (line == NULL || *line == '\n')
+		if (line == NULL || *line == '\n') //check that string holding getline input is valid
 			continue;
 
-		strs_split_by_semicolon = parse_semicolon(line, &status, head_main);
-		if (!strs_split_by_semicolon || !*strs_split_by_semicolon)
+		strs_split_by_semicolon = parse_semicolon(line, &status, head_main); //result in strings of command(instructions) which may include logical operators
+		if (!strs_split_by_semicolon || !*strs_split_by_semicolon) //checks that above assignment was successfully executed
 		{
 			newputs(av[0]);
 			_puts(": Could not parse command");
@@ -42,7 +42,7 @@ int main(int ac, char **av)
 		}
 		while (strs_split_by_semicolon[i] != NULL)
 		{
-			ptr_to_cmd_ops = parse_logical_ops(strs_split_by_semicolon[i], &status);
+			ptr_to_cmd_ops = parse_logical_ops(strs_split_by_semicolon[i], &status);//split by logical operators, return pointer to list
 
 			if (!ptr_to_cmd_ops || !ptr_to_cmd_ops->cmd_tokens || !*(ptr_to_cmd_ops->cmd_tokens))
 			{
@@ -53,7 +53,7 @@ int main(int ac, char **av)
 			}
 			while (*ptr_to_cmd_ops->cmd_tokens != NULL)
 			{
-				printf("str: %s\n", *(ptr_to_cmd_ops->cmd_tokens)++);
+				printf("str: %s\n", *(ptr_to_cmd_ops->cmd_tokens)++); //print?
 			}
 			while (*ptr_to_cmd_ops->ops_tokens != NULL)
 			{
@@ -64,7 +64,7 @@ int main(int ac, char **av)
 		}
 		return (1);
 
-		argv = str_into_tokens(line, delim, head_arvg);
+		argv = str_into_tokens(line, delim, head_arvg);//continue with normal execution
 
 		if (built_in(argv[0], builtin))
 		{
