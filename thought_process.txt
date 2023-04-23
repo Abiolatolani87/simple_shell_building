@@ -1,0 +1,9 @@
+echo hello && pwd ; ls -l || ls -a || ls
+
+1. Outer loop -> while(1)
+	Tokenise by ;										echo hello && pwd
+												ls -l || ls -a || ls
+		count arguments(semi_arg_count)
+
+2. Middle loop -> while(i < semi_arg_count)
+	Tokenise by logical operators

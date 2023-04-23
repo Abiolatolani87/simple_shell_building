@@ -38,6 +38,7 @@ typedef struct tokenize_cmd_ops
 
 extern char **environ;
 
+int contains_log_operator(char *str);
 size_t print_list(const list_t *h);
 size_t list_len(const list_t *h);
 void _puts(char *str);

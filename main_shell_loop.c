@@ -42,6 +42,10 @@ int main(int ac, char **av)
 		}
 		while (strs_split_by_semicolon[i] != NULL)
 		{
+			if (contains_log_op(strs_split_by_semicolon[i]))
+				printf("contains logical operator");
+
+			printf("str split by semicolon: %s ===%s\n",strs_split_by_semicolon[i], strs_split_by_semicolon[i+1]);
 			ptr_to_cmd_ops = parse_logical_ops(strs_split_by_semicolon[i], &status);//split by logical operators, return pointer to list
 
 			if (!ptr_to_cmd_ops || !ptr_to_cmd_ops->cmd_tokens || !*(ptr_to_cmd_ops->cmd_tokens))
@@ -53,7 +57,7 @@ int main(int ac, char **av)
 			}
 			while (*ptr_to_cmd_ops->cmd_tokens != NULL)
 			{
-				printf("str: %s\n", *(ptr_to_cmd_ops->cmd_tokens)++); //print?
+				printf("str: %s\n", *(ptr_to_cmd_ops->cmd_tokens)++);
 			}
 			while (*ptr_to_cmd_ops->ops_tokens != NULL)
 			{
