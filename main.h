@@ -25,6 +25,17 @@ typedef struct list_s
 	struct list_s *next;
 } list_t;
 
+/**
+ * struct tokenize_cmd_ops - commands and logical ops tokens
+ * @cmd_tokens: commands tokens
+ * @ops_tokens: logical ops tokens
+*/
+typedef struct tokenize_cmd_ops
+{
+	char **cmd_tokens;
+	char **ops_tokens;
+} cmd_ops;
+
 extern char **environ;
 
 size_t print_list(const list_t *h);
