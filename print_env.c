@@ -10,7 +10,7 @@ void print_env(void)
 
 	while (environ[i] != NULL)
 	{
-		//printf("%s\n", environ[i]);
+		/*printf("%s\n", environ[i]);*/
 		_puts(environ[i]);
 		i++;
 	}

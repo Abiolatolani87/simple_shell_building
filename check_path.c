@@ -11,6 +11,9 @@
 
 char *check_path(char *first_arg, char **dirs, list_t *head)
 {
+	char *path = NULL, *file_fullpath = NULL;
+	int i = 0, length = 0;
+
 	if (has_forward_slash(first_arg))
 	{
 		if (end_with_forward_slash(first_arg))
@@ -25,12 +28,10 @@ char *check_path(char *first_arg, char **dirs, list_t *head)
 	}
 	else
 	{
-		char *path = _getenv("PATH");
+		path = _getenv("PATH");
 		dirs = str_into_tokens(path, ':', head);
 
-		int i = 0;
-		int length = strlen(first_arg);
-		char *file_fullpath = NULL;
+		length = strlen(first_arg);
 
 		while (dirs[i] != NULL)
 		{

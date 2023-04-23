@@ -84,5 +84,9 @@ void handle_setenv(int argv_count, char **argv, int *status);
 void handle_unsetenv(int argv_count, char **argv, int *status);
 void prompt_user(void);
 void free_resources(char *line, list_t *head_argv, char **argv, FILE *stream);
+cmd_ops *parse_logical_ops(char *str, int *status, cmd_ops *ptr_to_cmd_and_ops);
+int starts_with_semicolon(char *str);
+int has_consecutive_semicolon(char *str);
+char **parse_semicolon(char *str, int *status, list_t *head);
 
 #endif

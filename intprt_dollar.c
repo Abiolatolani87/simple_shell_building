@@ -39,7 +39,7 @@ void interpret_dollar(char **str, int status)
 			else if (_strlen(str[i]) > 2)
 			{
 				new_str = _getenv(++(str[i]));
-				//free(str[i]);
+
 				str[i] = new_str;
 			}
 		}

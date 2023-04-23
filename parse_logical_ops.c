@@ -48,7 +48,7 @@ cmd_ops *parse_logical_ops(char *str, int *status, cmd_ops *ptr_to_cmd_and_ops)
 	int token_started = 0;
 	int i = 0;
 	char *op_str = NULL;
-	char token_buffer[1024] = {};
+	char token_buffer[1024] = {0};
 	int buffer_index = 0;
 	list_t *tokens_head = NULL;
 	list_t *ops_head = NULL;

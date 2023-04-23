@@ -17,6 +17,7 @@ int starts_with_semicolon(char *str)
 			return (0);
 		str++;
 	}
+	return (0);
 }
 
 
@@ -52,10 +53,8 @@ int has_consecutive_semicolon(char *str)
  * @str: pointer to string to tokenize
  * Return: pointer to tokenized string
 */
-char **parse_semicolon(char *str, int *status)
+char **parse_semicolon(char *str, int *status, list_t *head)
 {
-	list_t *head = NULL;
-
 	if (str == NULL)
 		return (NULL);
 	if (starts_with_semicolon(str) || has_consecutive_semicolon(str))
@@ -65,6 +64,5 @@ char **parse_semicolon(char *str, int *status)
 
 		return (NULL);
 	}
-	else
-		return (str_into_tokens(str, ';', head));
+	return (str_into_tokens(str, ';', head));
 }

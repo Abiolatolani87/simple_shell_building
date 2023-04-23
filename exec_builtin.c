@@ -23,7 +23,7 @@ void execute_builtin_cmd(char **argv, int *status, char *line, list_t *head_argv
 	}
 	else if (_strcmp(argv[0], "getenv") == 0)
 	{
-		//printf("%s: %s\n", argv[1], _getenv(argv[1]));
+		/*printf("%s: %s\n", argv[1], _getenv(argv[1]));*/
 		newputs(argv[1]);
 		newputs(": ");
 		_puts(_getenv(argv[1]));
