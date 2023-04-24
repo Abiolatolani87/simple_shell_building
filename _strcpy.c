@@ -6,7 +6,7 @@
  * @src: pointer to string to be copied
  * Return: pointer to dest
  */
- 
+
 char *_strcpy(char *dest, const char *src)
 {
 	int len = _strlen(src);

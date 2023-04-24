@@ -90,5 +90,8 @@ cmd_ops *parse_logical_ops(char *str, int *status);
 int starts_with_semicolon(char *str);
 int has_consecutive_semicolon(char *str);
 char **parse_semicolon(char *str, int *status, list_t *head);
+void handle_error(char *str_1, char *str_2, int *status);
+void set_old_new_pwd(char *old_dir, char *new_dir, int *status);
+void handle_usage_error(char *str, int *status);
 
 #endif

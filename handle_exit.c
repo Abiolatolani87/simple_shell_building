@@ -1,6 +1,15 @@
 #include "main.h"
 
-void handle_exit(int argv_count, char **argv, char *line, list_t *head_argv, FILE *stream)
+/**
+ * handle_exit - execute exit builtin
+ * @argv_count: number of arguments
+ * @argv: pointer to strings
+ * @line: pointer to command
+ * @head_argv: pointer to list
+ * @stream: pointer to input stream
+*/
+void handle_exit(int argv_count, char **argv, char *line,
+		 list_t *head_argv, FILE *stream)
 {
 	int exit_code = 0;
 

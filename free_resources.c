@@ -1,5 +1,12 @@
 #include "main.h"
 
+/**
+ * free_resources - free memory
+ * @line: pointer to line to free
+ * @head_argv: pointer to list to free
+ * @argv: pointer to strings to free
+ * @stream: pointer to file stream
+*/
 void free_resources(char *line, list_t *head_argv, char **argv, FILE *stream)
 {
 	if (line != NULL)

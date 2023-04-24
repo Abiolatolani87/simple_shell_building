@@ -1,5 +1,11 @@
 #include "main.h"
 
+/**
+ * handle_setenv - execute cd command
+ * @argv_count: number of arguments
+ * @argv: pointer to strings
+ * @status: pointer to exit code
+*/
 void handle_setenv(int argv_count, char **argv, int *status)
 {
 	if (argv_count != 3)

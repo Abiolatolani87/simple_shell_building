@@ -1,5 +1,10 @@
 #include "main.h"
 
+/**
+ * create_child_process - forks a parent process to run a command
+ * @status: pointer to exit code
+ * @argv: pointer to command
+*/
 void create_child_process(int *status, char **argv)
 {
 	char **dirs = NULL;
@@ -8,9 +13,7 @@ void create_child_process(int *status, char **argv)
 	pid_t child_pid;
 
 	interpret_dollar(argv, *status);
-
 	file_fullpath = check_path(argv[0], dirs, head_path);
-
 	if (file_fullpath == NULL)
 	{
 		perror(argv[0]);
@@ -18,9 +21,7 @@ void create_child_process(int *status, char **argv)
 	}
 	else
 	{
-		/* change argv[0] to point to fullpath */
 		argv[0] = file_fullpath;
-
 		child_pid = fork();
 		if (child_pid == -1)
 		{
@@ -45,6 +46,5 @@ void create_child_process(int *status, char **argv)
 		}
 	}
 	free(argv[0]);
-	free_list(head_path);
-	free(dirs);
+	free_allocated_memory(head_path, dirs);
 }

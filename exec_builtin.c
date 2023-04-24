@@ -1,6 +1,7 @@
 #include "main.h"
 
-void execute_builtin_cmd(char **argv, int *status, char *line, list_t *head_argv, FILE *stream)
+void execute_builtin_cmd(char **argv, int *status, char *line,
+			 list_t *head_argv, FILE *stream)
 {
 	int argv_count = 0;
 
@@ -27,6 +28,5 @@ void execute_builtin_cmd(char **argv, int *status, char *line, list_t *head_argv
 		newputs(argv[1]);
 		newputs(": ");
 		_puts(_getenv(argv[1]));
-
 	}
 }

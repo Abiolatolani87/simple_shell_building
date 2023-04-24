@@ -27,6 +27,7 @@ int main(int ac, char **av)
 		if ((bytes_read = getline(&line, &len, stream)) == -1)
 		{
 			_putchar('\n');
+			free(line);
 			exit(1);
 		}
 
