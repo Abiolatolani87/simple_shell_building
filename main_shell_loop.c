@@ -24,28 +24,33 @@ int main(int ac, char **av)
 	{
 		prompt_user();
 
-		if ((bytes_read = getline(&line, &len, stream)) == -1) //check if getline executed unsuccessfully
+		if ((bytes_read = getline(&line, &len, stream)) == -1)
 		{
 			_putchar('\n');
 			exit(1);
 		}
-		if (line == NULL || *line == '\n') //check that string holding getline input is valid
+
+		if (line == NULL || *line == '\n') // check that string holding getline input is valid
 			continue;
 
-		/**
-		 * strs_split_by_semicolon = parse_semicolon(line, &status, head_main); //result in strings of command(instructions) which may include logical operators
-		if (!strs_split_by_semicolon || !*strs_split_by_semicolon) //checks that above assignment was successfully executed
+		strs_split_by_semicolon = parse_semicolon(line, &status, head_main);
+
+		printf("string: %s", strs_split_by_semicolon[i]);
+		
+		if (!strs_split_by_semicolon || !*strs_split_by_semicolon)	     // checks that above assignment was successfully executed
 		{
 			newputs(av[0]);
 			_puts(": Could not parse command");
 			status = 127;
 			continue;
 		}
+		printf("line: %s", line);
 		while (strs_split_by_semicolon[i] != NULL)
 		{
+			printf("string split %s\n", strs_split_by_semicolon[i]);
 			if (contains_log_operator(strs_split_by_semicolon[i]))
 			{
-				ptr_to_cmd_ops = parse_logical_ops(strs_split_by_semicolon[i], &status);//split by logical operators, return pointer to list
+				ptr_to_cmd_ops = parse_logical_ops(strs_split_by_semicolon[i], &status); // split by logical operators, return pointer to list
 
 				if (!ptr_to_cmd_ops || !ptr_to_cmd_ops->cmd_tokens || !*(ptr_to_cmd_ops->cmd_tokens))
 				{
@@ -56,35 +61,58 @@ int main(int ac, char **av)
 				}
 				while (*ptr_to_cmd_ops->cmd_tokens != NULL)
 				{
-					printf("str: %s\n", *(ptr_to_cmd_ops->cmd_tokens)++);
-				}
-				while (*ptr_to_cmd_ops->ops_tokens != NULL)
-				{
-					printf("str: %s\n", *(ptr_to_cmd_ops->ops_tokens)++);
+					argv = str_into_tokens(line, delim, head_arvg);
+
+					if (built_in(argv[0], builtin))
+					{
+						execute_builtin_cmd(argv, &status, line, head_arvg, stream);
+					}
+					else
+					{
+						create_child_process(&status, argv);
+					}
+					free_list(head_arvg);
+					free(argv);
+					if (status == 0)
+					{
+						if (_strcmp(*ptr_to_cmd_ops->ops_tokens, "&&") == 0)
+							continue;
+						else if (_strcmp(*ptr_to_cmd_ops->ops_tokens, "||") == 0)
+							break;
+						else
+							exit(1);
+					}
+					else
+					{
+						if (_strcmp(*ptr_to_cmd_ops->ops_tokens, "&&") == 0)
+							break;
+						else if (_strcmp(*ptr_to_cmd_ops->ops_tokens, "||") == 0)
+							continue;
+						else
+							exit(1);
+					}
+
 				}
 			}
 			else
 			{
-				printf("str without log operator: %s\n", strs_split_by_semicolon[i]);
-			}
+				argv = str_into_tokens(line, delim, head_arvg); // continue with normal execution
 
+				if (built_in(argv[0], builtin))
+				{
+					execute_builtin_cmd(argv, &status, line, head_arvg, stream);
+				}
+				else
+				{
+					create_child_process(&status, argv);
+				}
+				free_list(head_arvg);
+				free(argv);
+			}
 
 			i++;
 		}
-		return (1);*/
-
-		argv = str_into_tokens(line, delim, head_arvg);//continue with normal execution
-
-		if (built_in(argv[0], builtin))
-		{
-			execute_builtin_cmd(argv, &status, line, head_arvg, stream);
-		}
-		else
-		{
-			create_child_process(&status, argv);
-		}
-		free_list(head_arvg);
-		free(argv);
+		free_list(head_main);
 	}
 	free(line);
 	fclose(stream);
