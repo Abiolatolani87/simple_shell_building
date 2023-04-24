@@ -36,7 +36,7 @@ int main(int ac, char **av)
 		strs_split_by_semicolon = parse_semicolon(line, &status, head_main);
 
 		printf("string: %s", strs_split_by_semicolon[i]);
-		
+
 		if (!strs_split_by_semicolon || !*strs_split_by_semicolon)	     // checks that above assignment was successfully executed
 		{
 			newputs(av[0]);

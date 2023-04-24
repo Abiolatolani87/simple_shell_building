@@ -56,8 +56,12 @@ int has_consecutive_semicolon(char *str)
 char **parse_semicolon(char *str, int *status, list_t *head)
 {
 	char *strR = NULL;
+	char **str_p = NULL;
+
 	if (str == NULL)
 		return (NULL);
+
+
 	/*if ((strchr(str, ';')) == NULL)
 	{
 
@@ -71,5 +75,9 @@ char **parse_semicolon(char *str, int *status, list_t *head)
 
 		return (NULL);
 	}
-	return (str_into_tokens(str, ';', head));
+
+	str_p = str_into_tokens(str, ';', head);
+	//printf("first one: %s\n", *str_p);
+
+	return (str_p);
 }
