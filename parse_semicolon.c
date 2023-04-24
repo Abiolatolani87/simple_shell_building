@@ -61,13 +61,6 @@ char **parse_semicolon(char *str, int *status, list_t *head)
 	if (str == NULL)
 		return (NULL);
 
-
-	/*if ((strchr(str, ';')) == NULL)
-	{
-
-		strR = _strdup(str);
-		return (&strR);
-	}*/
 	if (starts_with_semicolon(str) || has_consecutive_semicolon(str))
 	{
 		// _puts("bash: syntax error");
@@ -77,7 +70,6 @@ char **parse_semicolon(char *str, int *status, list_t *head)
 	}
 
 	str_p = str_into_tokens(str, ';', head);
-	//printf("first one: %s\n", *str_p);
 
 	return (str_p);
 }

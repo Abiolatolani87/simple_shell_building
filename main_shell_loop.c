@@ -7,7 +7,7 @@
 int main(int ac, char **av)
 {
 
-	int status = 0, i = 0;
+	int status = 0, i = 0, j = 0, k =0;
 	FILE *stream = stdin;
 	char *line = NULL;
 	size_t len = 0;
@@ -30,14 +30,12 @@ int main(int ac, char **av)
 			exit(1);
 		}
 
-		if (line == NULL || *line == '\n') // check that string holding getline input is valid
+		if (line == NULL || *line == '\n')
 			continue;
 
 		strs_split_by_semicolon = parse_semicolon(line, &status, head_main);
 
-		printf("string: %s", strs_split_by_semicolon[i]);
-
-		if (!strs_split_by_semicolon || !*strs_split_by_semicolon)	     // checks that above assignment was successfully executed
+		if (!strs_split_by_semicolon || !*strs_split_by_semicolon)
 		{
 			newputs(av[0]);
 			_puts(": Could not parse command");
@@ -50,7 +48,7 @@ int main(int ac, char **av)
 			printf("string split %s\n", strs_split_by_semicolon[i]);
 			if (contains_log_operator(strs_split_by_semicolon[i]))
 			{
-				ptr_to_cmd_ops = parse_logical_ops(strs_split_by_semicolon[i], &status); // split by logical operators, return pointer to list
+				ptr_to_cmd_ops = parse_logical_ops(strs_split_by_semicolon[i], &status);
 
 				if (!ptr_to_cmd_ops || !ptr_to_cmd_ops->cmd_tokens || !*(ptr_to_cmd_ops->cmd_tokens))
 				{
@@ -59,9 +57,11 @@ int main(int ac, char **av)
 					status = 127;
 					break;
 				}
-				while (*ptr_to_cmd_ops->cmd_tokens != NULL)
+				j = 0;
+				k = 0;
+				while (ptr_to_cmd_ops->cmd_tokens[j] != NULL)
 				{
-					argv = str_into_tokens(line, delim, head_arvg);
+					argv = str_into_tokens(ptr_to_cmd_ops->cmd_tokens[j], delim, head_arvg);
 
 					if (built_in(argv[0], builtin))
 					{
@@ -75,28 +75,40 @@ int main(int ac, char **av)
 					free(argv);
 					if (status == 0)
 					{
-						if (_strcmp(*ptr_to_cmd_ops->ops_tokens, "&&") == 0)
+						if (_strcmp(ptr_to_cmd_ops->ops_tokens[k], "&&") == 0)
+						{
+							k++;
 							continue;
-						else if (_strcmp(*ptr_to_cmd_ops->ops_tokens, "||") == 0)
+						}
+						else if (_strcmp(ptr_to_cmd_ops->ops_tokens[k], "||") == 0)
+						{
+							k++;
 							break;
+						}
 						else
 							exit(1);
 					}
 					else
 					{
-						if (_strcmp(*ptr_to_cmd_ops->ops_tokens, "&&") == 0)
+						if (_strcmp(ptr_to_cmd_ops->ops_tokens[k], "&&") == 0)
+						{
+							k++;
 							break;
-						else if (_strcmp(*ptr_to_cmd_ops->ops_tokens, "||") == 0)
+						}
+						else if (_strcmp(ptr_to_cmd_ops->ops_tokens[k], "||") == 0)
+						{
+							k++;
 							continue;
+						}
 						else
 							exit(1);
 					}
-
+					j++;
 				}
 			}
 			else
 			{
-				argv = str_into_tokens(line, delim, head_arvg); // continue with normal execution
+				argv = str_into_tokens(strs_split_by_semicolon[i], delim, head_arvg);
 
 				if (built_in(argv[0], builtin))
 				{
