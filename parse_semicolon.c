@@ -20,7 +20,6 @@ int starts_with_semicolon(char *str)
 	return (0);
 }
 
-
 /**
  * has_consecutive_semicolon - checks if string has consecutive ';'
  * @str: pointer to string to check
@@ -51,6 +50,8 @@ int has_consecutive_semicolon(char *str)
 /**
  * parse_semicolon - tokenize string by ';'
  * @str: pointer to string to tokenize
+ * @status: pointer to exit code
+ * @head: pointer to linked list
  * Return: pointer to tokenized string
 */
 char **parse_semicolon(char *str, int *status, list_t *head)
@@ -62,12 +63,7 @@ char **parse_semicolon(char *str, int *status, list_t *head)
 		return (NULL);
 
 	if (starts_with_semicolon(str) || has_consecutive_semicolon(str))
-	{
-		// _puts("bash: syntax error");
-		// *status = 127;
-
 		return (NULL);
-	}
 
 	str_p = str_into_tokens(str, ';', head);
 

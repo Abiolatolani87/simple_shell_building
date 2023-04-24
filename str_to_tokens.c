@@ -6,7 +6,7 @@
  * @str: string to be tokenised
  * @delim: delimeter used to separate the strings
  * @head: pointe to head of list storing tokens
- * Return: NULL on failure, else return ppointer to array holding pointers to array
+ * Return: NULL on failure, else return pointer to array of strings
 */
 
 char **str_into_tokens(const char *str, char delim, list_t *head)

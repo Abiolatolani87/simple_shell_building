@@ -3,6 +3,7 @@
 /**
  * store_str_ptrs - store the addresses of all strings in the list
  * @h: pointer to a list
+ * @ptrs_to_str: pointer to strings
  * Return: array of pointers to string
  */
 

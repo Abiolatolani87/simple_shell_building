@@ -8,8 +8,7 @@
 */
 cmd_ops *parse_logical_ops(char *str, int *status)
 {
-	int op_found = 0;
-	int token_started = 0;
+	int op_found = 0, token_started = 0;
 	int i = 0, tokens_list_len = 0, ops_list_len = 0;
 	char *op_str = NULL;
 	char token_buffer[1024] = {0};
@@ -32,16 +31,12 @@ cmd_ops *parse_logical_ops(char *str, int *status)
 			op_found = 1;
 			op_str = "||";
 		}
-
 		if ((op_found && !token_started) || (op_found && str[i + 2] == '\0'))
 		{
 			if (tokens_head)
 				free_list(tokens_head);
 			if (ops_head)
 				free_list(ops_head);
-
-			// _puts("bash: syntax error");
-			// *status = 127;
 
 			return (NULL);
 		}
