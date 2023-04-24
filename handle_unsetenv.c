@@ -18,4 +18,5 @@ void handle_unsetenv(int argv_count, char **argv, int *status)
 			*status = 126;
 		}
 	}
+	*status = 0;
 }

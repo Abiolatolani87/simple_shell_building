@@ -32,7 +32,8 @@ int main(int ac, char **av)
 		if (line == NULL || *line == '\n') //check that string holding getline input is valid
 			continue;
 
-		strs_split_by_semicolon = parse_semicolon(line, &status, head_main); //result in strings of command(instructions) which may include logical operators
+		/**
+		 * strs_split_by_semicolon = parse_semicolon(line, &status, head_main); //result in strings of command(instructions) which may include logical operators
 		if (!strs_split_by_semicolon || !*strs_split_by_semicolon) //checks that above assignment was successfully executed
 		{
 			newputs(av[0]);
@@ -70,7 +71,7 @@ int main(int ac, char **av)
 
 			i++;
 		}
-		return (1);
+		return (1);*/
 
 		argv = str_into_tokens(line, delim, head_arvg);//continue with normal execution
 

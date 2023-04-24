@@ -24,11 +24,13 @@ void handle_cd(int argv_count, char **argv, int *status)
 			{
 				perror(argv[0]);
 				perror(argv[1]);
+				*status = 1;
 			}
 			else
 			{
 				_setenv("OLDPWD", curr_dir, 1);
 				_setenv("PWD", env_value, 1);
+				*status = 0;
 			}
 		}
 		else
@@ -37,12 +39,14 @@ void handle_cd(int argv_count, char **argv, int *status)
 			{
 				perror(argv[0]);
 				perror(argv[1]);
+				*status = 1;
 			}
 			else
 			{
 				_setenv("OLDPWD", curr_dir, 1);
 				/* TODO: call getcwd(buffer, size)then set PWD with string in buffer */
 				_setenv("PWD", argv[1], 1);
+				*status = 0;
 			}
 		}
 	}
@@ -53,11 +57,13 @@ void handle_cd(int argv_count, char **argv, int *status)
 		{
 			perror(argv[0]);
 			perror(argv[1]);
+			*status = 1;
 		}
 		else
 		{
 			_setenv("OLDPWD", curr_dir, 1);
 			_setenv("PWD", home_value, 1);
+			*status = 0;
 		}
 	}
 	free(curr_dir);
