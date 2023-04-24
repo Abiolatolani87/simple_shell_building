@@ -30,8 +30,10 @@ int main(int ac, char **av)
 			exit(1);
 		}
 
-		if (line == NULL || *line == '\n')
+		if (*line == '#' || line == NULL || *line == '\n')
 			continue;
+
+		trunc_comment(line);
 
 		strs_split_by_semicolon = parse_semicolon(line, &status, head_main);
 
