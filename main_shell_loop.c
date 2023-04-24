@@ -7,7 +7,7 @@
 int main(int ac, char **av)
 {
 
-	int status = 0, i = 0, j = 0, k =0;
+	int status = 0, i = 0, j = 0, k = 0;
 	FILE *stream = stdin;
 	char *line = NULL;
 	size_t len = 0;
@@ -42,10 +42,10 @@ int main(int ac, char **av)
 			status = 127;
 			continue;
 		}
-		printf("line: %s", line);
+
+		i = 0;
 		while (strs_split_by_semicolon[i] != NULL)
 		{
-			printf("string split %s\n", strs_split_by_semicolon[i]);
 			if (contains_log_operator(strs_split_by_semicolon[i]))
 			{
 				ptr_to_cmd_ops = parse_logical_ops(strs_split_by_semicolon[i], &status);
@@ -65,7 +65,7 @@ int main(int ac, char **av)
 
 					if (built_in(argv[0], builtin))
 					{
-						execute_builtin_cmd(argv, &status, line, head_arvg, stream);
+						execute_builtin_cmd(argv, &status, ptr_to_cmd_ops->cmd_tokens[j], head_arvg, stream);
 					}
 					else
 					{
@@ -73,6 +73,10 @@ int main(int ac, char **av)
 					}
 					free_list(head_arvg);
 					free(argv);
+					j++;
+					if (ptr_to_cmd_ops->ops_tokens[k] == NULL)
+						break;
+
 					if (status == 0)
 					{
 						if (_strcmp(ptr_to_cmd_ops->ops_tokens[k], "&&") == 0)
@@ -103,7 +107,6 @@ int main(int ac, char **av)
 						else
 							exit(1);
 					}
-					j++;
 				}
 			}
 			else
@@ -112,7 +115,7 @@ int main(int ac, char **av)
 
 				if (built_in(argv[0], builtin))
 				{
-					execute_builtin_cmd(argv, &status, line, head_arvg, stream);
+					execute_builtin_cmd(argv, &status, strs_split_by_semicolon[i], head_arvg, stream);
 				}
 				else
 				{
