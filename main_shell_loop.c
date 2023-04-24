@@ -64,6 +64,7 @@ int main(int ac, char **av)
 				k = 0;
 				while (ptr_to_cmd_ops->cmd_tokens[j] != NULL)
 				{
+					/* DISABLE ARGV EXTERN IN HEADER TO RUN THIS!!!!*/
 					argv = str_into_tokens(ptr_to_cmd_ops->cmd_tokens[j], delim, head_arvg);
 
 					if (built_in(argv[0], builtin))

@@ -37,6 +37,8 @@ typedef struct tokenize_cmd_ops
 } cmd_ops;
 
 extern char **environ;
+extern int argc;
+extern char **argv;
 
 int contains_log_operator(char *str);
 void trunc_comment(char *str);
