@@ -117,7 +117,7 @@ void handle_parsed_line(char ***tokens, FILE *stream, int *status, char *shell_n
 				if (ptr_to_cmd_ops->ops_tokens[k] == NULL)
 					break;
 
-				if (status == 0)
+				if (*status == 0)
 				{
 					if (_strcmp(ptr_to_cmd_ops->ops_tokens[k], "&&") == 0)
 					{
