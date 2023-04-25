@@ -24,7 +24,7 @@ int main(int ac, char **av)
 	char **strs_split_by_semicolon = NULL;
 
 	(void)ac;
-	custom_print(2, "just a raw string %d %s %c \n", 512, "print a string", 'E');
+	
 	while (1)
 	{
 		prompt_user();
@@ -64,7 +64,7 @@ void readline(char **line, FILE **stream, size_t *len, ssize_t *bytes)
 	*bytes = getline(line, len, *stream);
 	if (*bytes == -1)
 	{
-		_putchar('\n');
+		custom_print(2, "\n");
 		free(line);
 		exit(1);
 	}
@@ -77,8 +77,7 @@ void readline(char **line, FILE **stream, size_t *len, ssize_t *bytes)
  */
 void handle_parse_error(char *str, int *status)
 {
-	newputs(str);
-	_puts(": Could not parse command");
+	custom_print(2, ":%s Could not parse command\n", str);
 	*status = 127;
 }
 
