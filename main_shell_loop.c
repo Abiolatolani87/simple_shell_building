@@ -6,7 +6,7 @@ void handle_parsed_line(char ***tokens, FILE *stream,
 void handle_parse_error(char *str, int *status);
 void handle_parsed_cmd(char *str, FILE *stream, int *status);
 void execute_cmds_with_ops(cmd_ops *ptr_to_cmd_ops, FILE *stream, int *status);
-
+char **argvalues;
 /**
  * main - super simple shell
  * @ac: argument's count
@@ -23,6 +23,7 @@ int main(int ac, char **av)
 	list_t *head_main = NULL;
 	char **strs_split_by_semicolon = NULL;
 
+	argvalues = av;
 	(void)ac;
 	while (1)
 	{

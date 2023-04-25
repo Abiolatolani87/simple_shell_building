@@ -12,6 +12,7 @@
 #include <stdarg.h>
 #include "main2.h"
 
+extern char **argvalues;
 extern char **environ;
 /*extern char **arg_values;*/
 
