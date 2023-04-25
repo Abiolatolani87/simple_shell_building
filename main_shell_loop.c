@@ -24,7 +24,7 @@ int main(int ac, char **av)
 	char **strs_split_by_semicolon = NULL;
 
 	(void)ac;
-
+	custom_print(2, "just a raw string %d %s %c \n", 512, "print a string", 'E');
 	while (1)
 	{
 		prompt_user();

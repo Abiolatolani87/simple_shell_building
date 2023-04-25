@@ -9,6 +9,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <ctype.h>
+#include <stdarg.h>
 #include "main2.h"
 
 extern char **environ;
@@ -70,5 +71,6 @@ char **parse_semicolon(char *str, list_t *head);
 void handle_error(char *str_1, char *str_2, int *status);
 void set_old_new_pwd(char *old_dir, char *new_dir, int *status);
 void handle_usage_error(char *str, int *status);
+void custom_print(int fd, const char *const format, ...);
 
 #endif

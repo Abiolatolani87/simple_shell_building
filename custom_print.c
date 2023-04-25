@@ -1,13 +1,12 @@
-#include <stdarg.h>
 #include "main.h"
 
 /**
- * print_all - prins anything
+ * custom_print - prints anything
  * @fd: file descriptor
  * @format: pointer to separator
  * @...: arguments
  */
-void print_all(int fd, const char *const format, ...)
+void custom_print(int fd, const char *const format, ...)
 {
 	int i = 0, va = 0;
 	va_list p;
@@ -26,7 +25,7 @@ void print_all(int fd, const char *const format, ...)
 				write(fd, &va, 1);
 				i += 2;
 				break;
-			case 'i':
+			case 'd':
 				s = itostr(va_arg(p, int));
 				write(fd, s, _strlen(s));
 				i += 2;
@@ -41,8 +40,10 @@ void print_all(int fd, const char *const format, ...)
 			}
 		}
 		else
+		{
 			write(fd, &format[i], 1);
-		i++;
+			i++;
+		}
 	}
 	va_end(p);
 }
