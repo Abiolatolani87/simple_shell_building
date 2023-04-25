@@ -15,7 +15,6 @@ void execute_cmds_with_ops(cmd_ops *ptr_to_cmd_ops, FILE *stream, int *status);
  */
 int main(int ac, char **av)
 {
-
 	int status = 0;
 	FILE *stream = stdin;
 	char *line = NULL;
@@ -140,8 +139,8 @@ void handle_parsed_cmd(char *str, FILE *stream, int *status)
 }
 
 /**
- * handle_parsed_cmd - split commands by space and execute
- * @scmd: pointer to struct holding array of cmds and ops
+ * execute_cmds_with_ops - split commands by space and execute
+ * @ptr_to_cmd_ops: pointer to struct holding array of cmds and ops
  * @stream: input stream
  * @status: pointer to exit code
  */
@@ -152,7 +151,6 @@ void execute_cmds_with_ops(cmd_ops *ptr_to_cmd_ops, FILE *stream, int *status)
 	while (ptr_to_cmd_ops->cmd_tokens[j] != NULL)
 	{
 		handle_parsed_cmd(ptr_to_cmd_ops->cmd_tokens[j], stream, status);
-
 		j++;
 		if (ptr_to_cmd_ops->ops_tokens[k] == NULL)
 			break;
