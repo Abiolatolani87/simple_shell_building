@@ -10,6 +10,5 @@ void prompt_user(void)
 	 * newputs(getcwd(buffer, 1024));
 	 * newputs(" ");
 	 */
-	printf("this is argv: %s", *argvalues);
 	newputs("$ ");
 }

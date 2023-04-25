@@ -21,7 +21,7 @@ void create_child_process(int *status, char **argv)
 	}
 	else
 	{
-		argv[0] = file_fullpath;
+		/*argv[0] = file_fullpath;*/
 		child_pid = fork();
 		if (child_pid == -1)
 		{
@@ -30,7 +30,7 @@ void create_child_process(int *status, char **argv)
 		}
 		if (child_pid == 0)
 		{
-			if (execve(argv[0], argv, environ) == -1)
+			if (execve(file_fullpath, argv, environ) == -1)
 			{
 				perror(argv[0]);
 				exit(1);
@@ -45,6 +45,6 @@ void create_child_process(int *status, char **argv)
 			}
 		}
 	}
-	free(argv[0]);
+	free(file_fullpath);
 	free_allocated_memory(head_path, dirs);
 }
