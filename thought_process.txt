@@ -1,9 +1,5 @@
-echo hello && pwd ; ls -l || ls -a || ls
+FILE INPUT
 
-1. Outer loop -> while(1)
-	Tokenise by ;										echo hello && pwd
-												ls -l || ls -a || ls
-		count arguments(semi_arg_count)
-
-2. Middle loop -> while(i < semi_arg_count)
-	Tokenise by logical operators
+1. Check for 2 arguments
+	skip "prompt user" if argv is 2
+	argv[1] --> input stream {will be passed to getline}
