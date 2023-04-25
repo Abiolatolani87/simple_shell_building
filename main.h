@@ -13,6 +13,7 @@
 #include "main2.h"
 
 extern char **environ;
+/*extern char **arg_values;*/
 
 int contains_log_operator(char *str);
 void trunc_comment(char *str);

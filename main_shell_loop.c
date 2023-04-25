@@ -5,6 +5,7 @@ void handle_parsed_line(char ***tokens, FILE *stream,
 			int *statusint, char *shell_name);
 void handle_parse_error(char *str, int *status);
 void handle_parsed_cmd(char *str, FILE *stream, int *status);
+void execute_cmds_with_ops(cmd_ops *ptr_to_cmd_ops, FILE *stream, int *status);
 
 /**
  * main - super simple shell
@@ -24,7 +25,6 @@ int main(int ac, char **av)
 	char **strs_split_by_semicolon = NULL;
 
 	(void)ac;
-	
 	while (1)
 	{
 		prompt_user();
@@ -32,9 +32,7 @@ int main(int ac, char **av)
 
 		if (line == NULL || *line == '#' || *line == '\n' || bytes_read == 0)
 			continue;
-
 		trunc_comment(line);
-
 		strs_split_by_semicolon = parse_semicolon(line, head_main);
 
 		if (!strs_split_by_semicolon || !*strs_split_by_semicolon)
@@ -48,7 +46,6 @@ int main(int ac, char **av)
 	}
 	free(line);
 	fclose(stream);
-
 	return (0);
 }
 
@@ -91,7 +88,7 @@ void handle_parse_error(char *str, int *status)
 void handle_parsed_line(char ***tokens, FILE *stream,
 			int *status, char *shell_name)
 {
-	int i = 0, j = 0, k = 0;
+	int i = 0;
 
 	cmd_ops *ptr_to_cmd_ops = NULL;
 
@@ -107,52 +104,10 @@ void handle_parsed_line(char ***tokens, FILE *stream,
 				handle_parse_error(shell_name, status);
 				break;
 			}
-			j = 0;
-			k = 0;
-			while (ptr_to_cmd_ops->cmd_tokens[j] != NULL)
-			{
-				handle_parsed_cmd(ptr_to_cmd_ops->cmd_tokens[j], stream, status);
-
-				j++;
-				if (ptr_to_cmd_ops->ops_tokens[k] == NULL)
-					break;
-
-				if (*status == 0)
-				{
-					if (_strcmp(ptr_to_cmd_ops->ops_tokens[k], "&&") == 0)
-					{
-						k++;
-						continue;
-					}
-					else if (_strcmp(ptr_to_cmd_ops->ops_tokens[k], "||") == 0)
-					{
-						k++;
-						break;
-					}
-					else
-						exit(1);
-				}
-				else
-				{
-					if (_strcmp(ptr_to_cmd_ops->ops_tokens[k], "&&") == 0)
-					{
-						k++;
-						break;
-					}
-					else if (_strcmp(ptr_to_cmd_ops->ops_tokens[k], "||") == 0)
-					{
-						k++;
-						continue;
-					}
-					else
-						exit(1);
-				}
-			}
+			execute_cmds_with_ops(ptr_to_cmd_ops, stream, status);
 		}
 		else
-		{
 			handle_parsed_cmd((*tokens)[i], stream, status);
-		}
 		i++;
 	}
 }
@@ -182,4 +137,55 @@ void handle_parsed_cmd(char *str, FILE *stream, int *status)
 	}
 	free_list(head_arvg);
 	free(cmds);
+}
+
+/**
+ * handle_parsed_cmd - split commands by space and execute
+ * @scmd: pointer to struct holding array of cmds and ops
+ * @stream: input stream
+ * @status: pointer to exit code
+ */
+void execute_cmds_with_ops(cmd_ops *ptr_to_cmd_ops, FILE *stream, int *status)
+{
+	int j = 0, k = 0;
+
+	while (ptr_to_cmd_ops->cmd_tokens[j] != NULL)
+	{
+		handle_parsed_cmd(ptr_to_cmd_ops->cmd_tokens[j], stream, status);
+
+		j++;
+		if (ptr_to_cmd_ops->ops_tokens[k] == NULL)
+			break;
+
+		if (*status == 0)
+		{
+			if (_strcmp(ptr_to_cmd_ops->ops_tokens[k], "&&") == 0)
+			{
+				k++;
+				continue;
+			}
+			else if (_strcmp(ptr_to_cmd_ops->ops_tokens[k], "||") == 0)
+			{
+				k++;
+				break;
+			}
+			else
+				exit(1);
+		}
+		else
+		{
+			if (_strcmp(ptr_to_cmd_ops->ops_tokens[k], "&&") == 0)
+			{
+				k++;
+				break;
+			}
+			else if (_strcmp(ptr_to_cmd_ops->ops_tokens[k], "||") == 0)
+			{
+				k++;
+				continue;
+			}
+			else
+				exit(1);
+		}
+	}
 }
