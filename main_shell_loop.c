@@ -62,7 +62,6 @@ int main(int ac, char **av)
 void readline(char **line, FILE **stream, size_t *len, ssize_t *bytes)
 {
 	*bytes = getline(line, len, *stream);
-	printf("bytes read: %lu\n", *bytes);
 	if (*bytes == -1)
 	{
 		_putchar('\n');
