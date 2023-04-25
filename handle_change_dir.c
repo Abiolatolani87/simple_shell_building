@@ -81,9 +81,6 @@ void set_old_new_pwd(char *old_dir, char *new_dir, int *status)
 */
 void handle_usage_error(char *str, int *status)
 {
-	newputs(str);
-	newputs(":usage: ");
-	newputs(str);
-	_puts(" [DIRECTORY]");
+	custom_print(2, "%s:usage: %s [DIRECTORY]", str, str);
 	*status = 127;
 }

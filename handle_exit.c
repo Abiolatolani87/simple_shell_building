@@ -15,15 +15,12 @@ void handle_exit(int argv_count, char **argv, char *line,
 
 	if (argv_count > 2)
 	{
-		newputs("exit");
-		newputs("bash: exit: ");
-		newputs(argv[1]);
-		_puts(": wrong argument count");
+		custom_print(2, "exit\nbash: exit: %s: wrong argument count", argv[1]);
 		exit(2);
 	}
 	else if (argv_count == 1)
 	{
-		_puts("exit");
+		custom_print(2, "exit");
 		free_resources(line, head_argv, argv, stream);
 		exit(0);
 	}
