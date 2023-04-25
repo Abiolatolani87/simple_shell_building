@@ -1,7 +1,8 @@
 #include "main.h"
 
 void readline(char **line, FILE **stream, size_t *len, ssize_t *bytes);
-void handle_parsed_line(char ***tokens, FILE *stream, int *statusint, char *shell_name);
+void handle_parsed_line(char ***tokens, FILE *stream,
+			int *statusint, char *shell_name);
 void handle_parse_error(char *str, int *status);
 void handle_parsed_cmd(char *str, FILE *stream, int *status);
 
@@ -57,7 +58,7 @@ int main(int ac, char **av)
  * @stream: input stream
  * @len: length of line
  * @bytes: number of bytes read
-*/
+ */
 void readline(char **line, FILE **stream, size_t *len, ssize_t *bytes)
 {
 	*bytes = getline(line, len, *stream);
@@ -74,7 +75,7 @@ void readline(char **line, FILE **stream, size_t *len, ssize_t *bytes)
  * handle_parse_error - handle error
  * @str: pointer to string
  * @status: pointer to exit code
-*/
+ */
 void handle_parse_error(char *str, int *status)
 {
 	newputs(str);
@@ -88,8 +89,9 @@ void handle_parse_error(char *str, int *status)
  * @stream: input stream
  * @status: pointer to exit code
  * @shell_name: program name
-*/
-void handle_parsed_line(char ***tokens, FILE *stream, int *status, char *shell_name)
+ */
+void handle_parsed_line(char ***tokens, FILE *stream,
+			int *status, char *shell_name)
 {
 	int i = 0, j = 0, k = 0;
 
@@ -153,7 +155,6 @@ void handle_parsed_line(char ***tokens, FILE *stream, int *status, char *shell_n
 		{
 			handle_parsed_cmd((*tokens)[i], stream, status);
 		}
-
 		i++;
 	}
 }
@@ -163,7 +164,7 @@ void handle_parsed_line(char ***tokens, FILE *stream, int *status, char *shell_n
  * @str: pointer to string to tokenize
  * @stream: input stream
  * @status: pointer to exit code
-*/
+ */
 void handle_parsed_cmd(char *str, FILE *stream, int *status)
 {
 	char delim = ' ';

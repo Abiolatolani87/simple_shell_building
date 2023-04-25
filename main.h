@@ -9,32 +9,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <ctype.h>
-
-/**
- * struct list_s - singly linked list
- * @str: string - (malloc'ed string)
- * @len: length of the string
- * @next: points to the next node
- *
- * Description: singly linked list node structure
- */
-typedef struct list_s
-{
-	char *str;
-	unsigned int len;
-	struct list_s *next;
-} list_t;
-
-/**
- * struct tokenize_cmd_ops - commands and logical ops tokens
- * @cmd_tokens: commands tokens
- * @ops_tokens: logical ops tokens
-*/
-typedef struct tokenize_cmd_ops
-{
-	char **cmd_tokens;
-	char **ops_tokens;
-} cmd_ops;
+#include "main2.h"
 
 extern char **environ;
 
@@ -79,9 +54,11 @@ int _pow(int base, int exp);
 char **store_str_ptrs(const list_t *h, char **ptrs_to_str);
 void interpret_dollar(char **str, int status);
 void create_child_process(int *status, char **argv);
-void execute_builtin_cmd(char **argv, int *status, char *line, list_t *head_argv, FILE *stream);
+void execute_builtin_cmd(char **argv, int *status,
+			 char *line, list_t *head_argv, FILE *stream);
 void handle_cd(int argv_count, char **argv, int *status);
-void handle_exit(int argv_count, char **argv, char *line, list_t *head_argv, FILE *stream);
+void handle_exit(int argv_count, char **argv,
+		 char *line, list_t *head_argv, FILE *stream);
 void handle_setenv(int argv_count, char **argv, int *status);
 void handle_unsetenv(int argv_count, char **argv, int *status);
 void prompt_user(void);
