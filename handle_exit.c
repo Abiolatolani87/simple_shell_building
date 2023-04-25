@@ -29,6 +29,7 @@ void handle_exit(int argv_count, char **argv, char *line,
 		if (is_all_digits(argv[1]))
 		{
 			exit_code = _atoi(argv[1]);
+			free_resources(line, head_argv, argv, stream);
 			exit(exit_code);
 		}
 		else

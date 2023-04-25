@@ -136,7 +136,7 @@ void handle_parsed_cmd(char *str, FILE *stream, int *status)
 		create_child_process(status, cmds);
 	}
 	free_list(head_arvg);
-	free(cmds);
+	free(*cmds);
 }
 
 /**

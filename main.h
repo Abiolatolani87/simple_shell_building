@@ -15,7 +15,6 @@
 extern char **argvalues;
 extern char **environ;
 /*extern char **arg_values;*/
-
 int contains_log_operator(char *str);
 void trunc_comment(char *str);
 size_t print_list(const list_t *h);
@@ -74,5 +73,5 @@ void handle_error(char *str_1, char *str_2, int *status);
 void set_old_new_pwd(char *old_dir, char *new_dir, int *status);
 void handle_usage_error(char *str, int *status);
 void custom_print(int fd, const char *const format, ...);
-
+void free_strings(char **s);
 #endif
