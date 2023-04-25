@@ -9,6 +9,7 @@ void interpret_dollar(char **str, int status)
 {
 	char *new_str = NULL;
 	int i = 1;
+
 	while (str[i] != NULL)
 	{
 		if (str[i][0] == '$')

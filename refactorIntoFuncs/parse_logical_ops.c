@@ -3,10 +3,9 @@
 /**
  * parse_logical_ops - tokenize string by && and ||
  * @str: pointer to string to tokenize
- * @status: exit code
  * Return: pointer to tokenized string
 */
-cmd_ops *parse_logical_ops(char *str, int *status)
+cmd_ops *parse_logical_ops(char *str)
 {
 	int op_found = 0, token_started = 0;
 	int i = 0, tokens_list_len = 0, ops_list_len = 0;

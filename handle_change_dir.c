@@ -14,24 +14,24 @@ void handle_cd(int argv_count, char **argv, int *status)
 	env_value = _strdup(_getenv("OLDPWD"));
 
 	if (argv_count > 2)
-		handle_usage_error(argv[0], &status);
+		handle_usage_error(argv[0], status);
 	else if (argv_count == 2)
 	{
 		if (_strcmp(argv[1], "-") == 0)
 		{
 			if (chdir(env_value) == -1)
-				handle_error(argv[0], argv[1], &status);
+				handle_error(argv[0], argv[1], status);
 			else
-				set_old_new_pwd(curr_dir, env_value, &status);
+				set_old_new_pwd(curr_dir, env_value, status);
 		}
 		else
 		{
 			if (chdir(argv[1]) == -1)
-				handle_error(argv[0], argv[1], &status);
+				handle_error(argv[0], argv[1], status);
 			else
 			{
 				/* TODO: call getcwd(buffer, size)then set PWD with string in buffer */
-				set_old_new_pwd(curr_dir, argv[1], &status);
+				set_old_new_pwd(curr_dir, argv[1], status);
 			}
 		}
 	}
@@ -39,9 +39,9 @@ void handle_cd(int argv_count, char **argv, int *status)
 	{
 		home_value = _strdup(_getenv("HOME"));
 		if (chdir(home_value) == -1)
-			handle_error(argv[0], argv[1], &status);
+			handle_error(argv[0], argv[1], status);
 		else
-			set_old_new_pwd(curr_dir, home_value, &status);
+			set_old_new_pwd(curr_dir, home_value, status);
 	}
 	free(curr_dir);
 	free(env_value);

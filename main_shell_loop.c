@@ -36,7 +36,7 @@ int main(int ac, char **av)
 
 		trunc_comment(line);
 
-		strs_split_by_semicolon = parse_semicolon(line, &status, head_main);
+		strs_split_by_semicolon = parse_semicolon(line, head_main);
 
 		if (!strs_split_by_semicolon || !*strs_split_by_semicolon)
 		{
@@ -51,7 +51,7 @@ int main(int ac, char **av)
 		{
 			if (contains_log_operator(strs_split_by_semicolon[i]))
 			{
-				ptr_to_cmd_ops = parse_logical_ops(strs_split_by_semicolon[i], &status);
+				ptr_to_cmd_ops = parse_logical_ops(strs_split_by_semicolon[i]);
 
 				if (!ptr_to_cmd_ops || !ptr_to_cmd_ops->cmd_tokens || !*(ptr_to_cmd_ops->cmd_tokens))
 				{

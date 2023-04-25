@@ -50,14 +50,11 @@ int has_consecutive_semicolon(char *str)
 /**
  * parse_semicolon - tokenize string by ';'
  * @str: pointer to string to tokenize
- * @status: pointer to exit code
  * @head: pointer to linked list
  * Return: pointer to tokenized string
 */
-char **parse_semicolon(char *str, int *status, list_t *head)
+char **parse_semicolon(char *str, list_t *head)
 {
-	char *strR = NULL;
-	char **str_p = NULL;
 
 	if (str == NULL)
 		return (NULL);
@@ -65,7 +62,5 @@ char **parse_semicolon(char *str, int *status, list_t *head)
 	if (starts_with_semicolon(str) || has_consecutive_semicolon(str))
 		return (NULL);
 
-	str_p = str_into_tokens(str, ';', head);
-
-	return (str_p);
+	return (str_into_tokens(str, ';', head));
 }
