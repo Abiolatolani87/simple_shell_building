@@ -9,7 +9,6 @@ void add_token_to_list(char curr_ch, char *token_buf, list_t **tokens_h,
 /**
  * parse_logical_ops_r - tokenize string by && and ||
  * @str: pointer to string to tokenize
- * @status: exit code
  * Return: pointer to tokenized string
 */
 cmd_ops *parse_logical_ops(char *str)
