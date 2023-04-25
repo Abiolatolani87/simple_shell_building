@@ -2,29 +2,19 @@
 #include "main.h"
 
 /**
- * update - update flag and increment args
- * @n: pointer variable
- * @f: pointer to variable
- */
-void update(int *n, int *f)
-{
-	*n += 1;
-	*f = 1;
-}
-
-/**
  * print_all - prins anything
+ * @fd: file descriptor
  * @format: pointer to separator
  * @...: arguments
  */
 void print_all(int fd, const char *const format, ...)
 {
-	int i = 0, count = 0, num_arg = 0, flag = 0;
+	int i = 0, va = 0;
 	va_list p;
 	char *s;
 
 	va_start(p, format);
-	i = 0;
+
 	while (format && *(format + i) != '\0')
 	{
 		if (format[i] == '%')
@@ -32,15 +22,18 @@ void print_all(int fd, const char *const format, ...)
 			switch (format[i + 1])
 			{
 			case 'c':
-				_putchar(va_arg(p, int));
+				va = va_arg(p, int);
+				write(fd, &va, 1);
 				i += 2;
 				break;
 			case 'i':
-				newputs(itostr(va_arg(p, int)));
+				s = itostr(va_arg(p, int));
+				write(fd, s, _strlen(s));
 				i += 2;
 				break;
 			case 's':
-				newputs(va_arg(p, char *));
+				s = va_arg(p, char *);
+				write(fd, s, _strlen(s));
 				i += 2;
 				break;
 			default:
@@ -48,7 +41,7 @@ void print_all(int fd, const char *const format, ...)
 			}
 		}
 		else
-			_putchar(format[i]);
+			write(fd, &format[i], 1);
 		i++;
 	}
 	va_end(p);
