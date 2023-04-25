@@ -62,7 +62,7 @@ void readline(char **line, FILE **stream, size_t *len, ssize_t *bytes)
 	if (*bytes == -1)
 	{
 		custom_print(2, "\n");
-		free(line);
+		/*free(line);*/
 		exit(1);
 	}
 }

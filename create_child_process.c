@@ -16,7 +16,12 @@ void create_child_process(int *status, char **argv)
 	file_fullpath = check_path(argv[0], dirs, head_path);
 	if (file_fullpath == NULL)
 	{
-		perror(argv[0]);
+		if (!has_forward_slash(argv[0]))
+		{
+			custom_print(2, "%s: %d: %s: not found", argvalues[0], count_args(argv), argv[0]);
+		}
+		else
+			perror(argv[0]);
 		*status = 127;
 	}
 	else
@@ -45,7 +50,7 @@ void create_child_process(int *status, char **argv)
 			}
 		}
 	}
-	
+
 	free(file_fullpath);
 	free_allocated_memory(head_path, dirs);
 }

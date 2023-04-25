@@ -74,4 +74,5 @@ void set_old_new_pwd(char *old_dir, char *new_dir, int *status);
 void handle_usage_error(char *str, int *status);
 void custom_print(int fd, const char *const format, ...);
 void free_strings(char **s);
+int count_args(char **args);
 #endif
