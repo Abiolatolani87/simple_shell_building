@@ -18,7 +18,7 @@ char **store_str_ptrs(const list_t *h, char **ptrs_to_str)
 	{
 		if (h->str)
 		{
-			ptrs_to_str[i] = h->str;
+			ptrs_to_str[i] = _strdup(h->str);
 			i++;
 		}
 

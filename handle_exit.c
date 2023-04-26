@@ -8,8 +8,8 @@
  * @head_argv: pointer to list
  * @stream: pointer to input stream
 */
-void handle_exit(int argv_count, char **argv, char *line,
-		 list_t *head_argv, FILE *stream)
+void handle_exit(int argv_count, char **argv,
+		 list_t *head_argv, FILE *stream, char ***tokens)
 {
 	int exit_code = 0;
 
@@ -21,7 +21,9 @@ void handle_exit(int argv_count, char **argv, char *line,
 	else if (argv_count == 1)
 	{
 		custom_print(2, "exit\n");
-		free_resources(line, head_argv, argv, stream);
+		free_resources(head_argv, argv, stream);
+		free_strings(*tokens);
+		free(line);
 		exit(0);
 	}
 	else
@@ -29,7 +31,9 @@ void handle_exit(int argv_count, char **argv, char *line,
 		if (is_all_digits(argv[1]))
 		{
 			exit_code = _atoi(argv[1]);
-			free_resources(line, head_argv, argv, stream);
+			free_resources(head_argv, argv, stream);
+			free_strings(*tokens);
+			free(line);
 			exit(exit_code);
 		}
 		else

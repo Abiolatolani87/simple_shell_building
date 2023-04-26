@@ -4,10 +4,11 @@ void readline(char **line, FILE **stream, size_t *len, ssize_t *bytes);
 void handle_parsed_line(char ***tokens, FILE *stream,
 			int *statusint, char *shell_name);
 void handle_parse_error(char *str, int *status);
-void handle_parsed_cmd(char *str, FILE *stream, int *status);
+void handle_parsed_cmd(char ***tokens, char *str, FILE *stream, int *status);
 void execute_cmds_with_ops(cmd_ops *ptr_to_cmd_ops, FILE *stream, int *status);
 void callback(int signum);
 char **argvalues;
+char *line = NULL;
 /**
  * main - super simple shell
  * @ac: argument's count
@@ -18,7 +19,6 @@ int main(int ac, char **av)
 {
 	int status = 0;
 	FILE *stream = stdin;
-	char *line = NULL;
 	size_t len = 0;
 	ssize_t bytes_read = 0;
 	list_t *head_main = NULL;
@@ -47,8 +47,8 @@ int main(int ac, char **av)
 
 		free_list(head_main);
 	}
-	free(line);
-	fclose(stream);
+
+	printf("after typing exit\n");
 	return (0);
 }
 
@@ -75,8 +75,10 @@ void readline(char **line, FILE **stream, size_t *len, ssize_t *bytes)
 	if (*bytes == -1)
 	{
 		if (isatty(fileno(stdin)))
+		{
 			custom_print(2, "\n");
-		/*free(line);*/
+			free(*line);
+		}
 		exit(1);
 	}
 }
@@ -121,7 +123,7 @@ void handle_parsed_line(char ***tokens, FILE *stream,
 			execute_cmds_with_ops(ptr_to_cmd_ops, stream, status);
 		}
 		else
-			handle_parsed_cmd((*tokens)[i], stream, status);
+			handle_parsed_cmd(tokens, (*tokens)[i], stream, status);
 		i++;
 	}
 }
@@ -132,7 +134,7 @@ void handle_parsed_line(char ***tokens, FILE *stream,
  * @stream: input stream
  * @status: pointer to exit code
  */
-void handle_parsed_cmd(char *str, FILE *stream, int *status)
+void handle_parsed_cmd(char ***tokens, char *str, FILE *stream, int *status)
 {
 	char delim = ' ';
 	char **cmds = NULL;
@@ -143,14 +145,14 @@ void handle_parsed_cmd(char *str, FILE *stream, int *status)
 
 	if (built_in(cmds[0], builtin))
 	{
-		execute_builtin_cmd(cmds, status, str, head_arvg, stream);
+		execute_builtin_cmd(cmds, status, head_arvg, stream, tokens);
 	}
 	else
 	{
 		create_child_process(status, cmds);
 	}
 	free_list(head_arvg);
-	free(*cmds);
+	free_strings(cmds);
 }
 
 /**
@@ -165,7 +167,7 @@ void execute_cmds_with_ops(cmd_ops *ptr_to_cmd_ops, FILE *stream, int *status)
 
 	while (ptr_to_cmd_ops->cmd_tokens[j] != NULL)
 	{
-		handle_parsed_cmd(ptr_to_cmd_ops->cmd_tokens[j], stream, status);
+		handle_parsed_cmd(&(ptr_to_cmd_ops->cmd_tokens), ptr_to_cmd_ops->cmd_tokens[j], stream, status);
 		j++;
 		if (ptr_to_cmd_ops->ops_tokens[k] == NULL)
 			break;
