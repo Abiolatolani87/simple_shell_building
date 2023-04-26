@@ -10,7 +10,7 @@
 int has_same_key(char *str, const char *substr)
 {
 	unsigned int key_length = 0;
-	unsigned int substr_length = (unsigned int)strlen(substr);
+	unsigned int substr_length = (unsigned int)_strlen(substr);
 
 	key_length = key_len(str);
 

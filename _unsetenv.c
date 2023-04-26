@@ -12,7 +12,7 @@ int _unsetenv(const char *name)
 
 	while (environ[i])
 	{
-		if (strncmp(environ[i], name, strlen(name)) == 0)
+		if (strncmp(environ[i], name, _strlen(name)) == 0)
 		{
 			free(environ[i]);
 			found = 1;

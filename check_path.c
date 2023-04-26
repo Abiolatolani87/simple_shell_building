@@ -28,14 +28,14 @@ char *check_path(char *first_arg, char **dirs, list_t *head)
 		path = _getenv("PATH");
 		dirs = str_into_tokens(path, ':', head);
 
-		length = strlen(first_arg);
+		length = _strlen(first_arg);
 
 		while (dirs[i] != NULL)
 		{
-			dirs[i] = realloc(dirs[i], strlen(dirs[i]) + length + 2);
+			dirs[i] = realloc(dirs[i], _strlen(dirs[i]) + length + 2);
 
-			strcat(dirs[i], "/");
-			strcat(dirs[i], first_arg);
+			_strcat(dirs[i], "/");
+			_strcat(dirs[i], first_arg);
 
 			if (path_exist(dirs[i]))
 			{

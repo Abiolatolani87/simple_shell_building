@@ -11,5 +11,5 @@ int end_with_forward_slash(char *str)
 	if (!str)
 		return (0);
 	/* check if last character in str is '/' */
-	return (str[strlen(str) - 1] == '/');
+	return (str[_strlen(str) - 1] == '/');
 }
