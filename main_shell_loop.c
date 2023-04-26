@@ -33,7 +33,7 @@ int main(int ac, char **av)
 			prompt_user();
 		readline(&line, &stream, &len, &bytes_read);
 
-		if (line == NULL || *line == '#' || *line == '\n' || bytes_read == 0)
+		if (line == NULL || is_only_spaces(line) || *line == '#' || *line == '\n' || bytes_read == 0)
 			continue;
 		trunc_comment(line);
 		strs_split_by_semicolon = parse_semicolon(line, head_main);
