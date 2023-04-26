@@ -27,7 +27,8 @@ int main(int ac, char **av)
 	(void)ac;
 	while (1)
 	{
-		prompt_user();
+		if (isatty(fileno(stdin)))
+			prompt_user();
 		readline(&line, &stream, &len, &bytes_read);
 
 		if (line == NULL || *line == '#' || *line == '\n' || bytes_read == 0)
