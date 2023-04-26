@@ -126,6 +126,7 @@ void handle_parsed_line(char ***tokens, FILE *stream,
 			handle_parsed_cmd(tokens, (*tokens)[i], stream, status);
 		i++;
 	}
+	free_strings(*tokens);
 }
 
 /**
