@@ -2,12 +2,12 @@
 
 void handle_nonpath_error(char **argv, int *status);
 
-    /**
+/**
  * create_child_process - forks a parent process to run a command
  * @status: pointer to exit code
  * @argv: pointer to command
 */
-    void create_child_process(int *status, char **argv)
+void create_child_process(int *status, char **argv)
 {
 	char **dirs = NULL;
 	list_t *head_path = NULL;

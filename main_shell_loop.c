@@ -52,6 +52,10 @@ int main(int ac, char **av)
 	return (0);
 }
 
+/**
+ * callback - callback function
+ * @signum: signal number
+*/
 void callback(int signum)
 {
 	newputs("\n$ ");
