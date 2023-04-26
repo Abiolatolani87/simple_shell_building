@@ -46,7 +46,7 @@ void handle_nonpath_error(char **argv, int *status);
 			}
 		}
 	}
-	free(file_fullpath);
+	/*free(file_fullpath);*/
 	free_allocated_memory(head_path, dirs);
 }
 
