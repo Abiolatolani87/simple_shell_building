@@ -1,9 +1,9 @@
 #include "main.h"
 
 void search_for_ops(char curr_ch, char next_ch, int *found, char *op);
-void add_token_op_to_list(char *token_buf, list_t **tokens_h,
-			  list_t **ops_h, char *op, int *buf_index, int *started, int *found);
-void add_token_to_list(char curr_ch, char *token_buf, list_t **tokens_h,
+void add_token_op_to_list(char *token_buf, list_t *tokens_h,
+			  list_t *ops_h, char *op, int *buf_index, int *started, int *found);
+void add_token_to_list(char curr_ch, char *token_buf, list_t *tokens_h,
 		       int *buf_index, int *started);
 
 /**
@@ -38,13 +38,13 @@ cmd_ops *parse_logical_ops(char *str)
 		}
 		else if (op_found && token_started && str[i + 2] != '\0')
 		{
-			add_token_op_to_list(token_buffer, &tokens_head, &ops_head,
+			add_token_op_to_list(token_buffer, tokens_head, ops_head,
 					     op_str, &buffer_index, &token_started, &op_found);
 			i += 2;
 		}
 		else if (token_started && !op_found && str[i + 1] == '\0')
 		{
-			add_token_to_list(str[i], token_buffer, &tokens_head,
+			add_token_to_list(str[i], token_buffer, tokens_head,
 					  &buffer_index, &token_started);
 			i++;
 		}
@@ -109,12 +109,12 @@ void search_for_ops(char curr_ch, char next_ch, int *found, char *op)
  * @started: token started flag
  * @found: op found flag
 */
-void add_token_op_to_list(char *token_buf, list_t **tokens_h, list_t **ops_h,
+void add_token_op_to_list(char *token_buf, list_t *tokens_h, list_t *ops_h,
 			  char *op, int *buf_index, int *started, int *found)
 {
 	token_buf[*buf_index] = '\0';
-	add_node_end(tokens_h, token_buf);
-	add_node_end(ops_h, op);
+	tokens_h = add_node_end(tokens_h, token_buf);
+	ops_h = add_node_end(ops_h, op);
 	*started = 0;
 	*found = 0;
 	*buf_index = 0;
@@ -128,13 +128,13 @@ void add_token_op_to_list(char *token_buf, list_t **tokens_h, list_t **ops_h,
  * @buf_index: current buffer index
  * @started: token started flag
 */
-void add_token_to_list(char curr_ch, char *token_buf, list_t **tokens_h,
+void add_token_to_list(char curr_ch, char *token_buf, list_t *tokens_h,
 		       int *buf_index, int *started)
 {
 	token_buf[*buf_index] = curr_ch;
 	(*buf_index)++;
 	token_buf[*buf_index] = '\0';
-	add_node_end(tokens_h, token_buf);
+	tokens_h = add_node_end(tokens_h, token_buf);
 	*started = 0;
 	*buf_index = 0;
 }

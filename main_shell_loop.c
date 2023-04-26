@@ -1,7 +1,7 @@
 #include "main.h"
 
 void readline(char **line, FILE **stream, size_t *len, ssize_t *bytes);
-void handle_parsed_line(char ***tokens, FILE *stream,
+void handle_parsed_line(char **tokens, FILE *stream,
 			int *statusint, char *shell_name);
 void handle_parse_error(char *str, int *status);
 void handle_parsed_cmd(char *str, FILE *stream, int *status);
@@ -40,7 +40,7 @@ int main(int ac, char **av)
 			handle_parse_error(av[0], &status);
 			continue;
 		}
-		handle_parsed_line(&strs_split_by_semicolon, stream, &status, av[0]);
+		handle_parsed_line(strs_split_by_semicolon, stream, &status, av[0]);
 
 		free_list(head_main);
 	}
@@ -85,18 +85,18 @@ void handle_parse_error(char *str, int *status)
  * @status: pointer to exit code
  * @shell_name: program name
  */
-void handle_parsed_line(char ***tokens, FILE *stream,
+void handle_parsed_line(char **tokens, FILE *stream,
 			int *status, char *shell_name)
 {
 	int i = 0;
 
 	cmd_ops *ptr_to_cmd_ops = NULL;
 
-	while ((*tokens)[i] != NULL)
+	while (tokens[i] != NULL)
 	{
-		if (contains_log_operator((*tokens)[i]))
+		if (contains_log_operator(tokens[i]))
 		{
-			ptr_to_cmd_ops = parse_logical_ops((*tokens)[i]);
+			ptr_to_cmd_ops = parse_logical_ops(tokens[i]);
 
 			if (!ptr_to_cmd_ops || !ptr_to_cmd_ops->cmd_tokens ||
 			    !ptr_to_cmd_ops->cmd_tokens[0])
@@ -107,7 +107,7 @@ void handle_parsed_line(char ***tokens, FILE *stream,
 			execute_cmds_with_ops(ptr_to_cmd_ops, stream, status);
 		}
 		else
-			handle_parsed_cmd((*tokens)[i], stream, status);
+			handle_parsed_cmd(tokens[i], stream, status);
 		i++;
 	}
 }
@@ -136,7 +136,7 @@ void handle_parsed_cmd(char *str, FILE *stream, int *status)
 		create_child_process(status, cmds);
 	}
 	free_list(head_arvg);
-	free(*cmds);
+	free(cmds);
 }
 
 /**

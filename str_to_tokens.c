@@ -34,7 +34,7 @@ char **str_into_tokens(const char *str, char delim, list_t *head)
 			i++;
 		}
 		buffer[i] = '\0';
-		add_node_end(&head, buffer);
+		head = add_node_end(head, buffer);
 		i = 0;
 	}
 

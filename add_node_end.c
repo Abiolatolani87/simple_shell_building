@@ -7,7 +7,7 @@
  * Return: pointer to the new element
  */
 
-list_t *add_node_end(list_t **head, const char *str)
+list_t *add_node_end(list_t *head, const char *str)
 {
 	list_t *temp = NULL;
 	list_t *curr_node = NULL;
@@ -27,15 +27,15 @@ list_t *add_node_end(list_t **head, const char *str)
 
 	temp->len = (unsigned int)_strlen(str);
 	temp->next = NULL;
-	if (!*head)
+	if (!head)
 	{
-		*head = temp;
+		head = temp;
 		return (temp);
 	}
-	curr_node = *head;
+	curr_node = head;
 	while (curr_node->next)
 		curr_node = curr_node->next;
 	curr_node->next = temp;
 
-	return (temp);
+	return (head);
 }
