@@ -62,7 +62,8 @@ void readline(char **line, FILE **stream, size_t *len, ssize_t *bytes)
 	*bytes = getline(line, len, *stream);
 	if (*bytes == -1)
 	{
-		custom_print(2, "\n");
+		if (isatty(fileno(stdin)))
+			custom_print(2, "\n");
 		/*free(line);*/
 		exit(1);
 	}
