@@ -8,6 +8,8 @@ void free_strings(char **s)
 {
 	int i = 0;
 
+	if (!s || !*s)
+		return;
 	while (s[i] != NULL)
 	{
 		free(s[i]);

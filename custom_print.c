@@ -29,7 +29,7 @@ void custom_print(int fd, const char *const format, ...)
 				s = itostr(va_arg(p, int));
 				write(fd, s, _strlen(s));
 				i += 2;
-				free(s);
+				_free(s);
 				break;
 			case 's':
 				s = va_arg(p, char *);

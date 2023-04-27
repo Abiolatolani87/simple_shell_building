@@ -14,7 +14,7 @@ int _unsetenv(const char *name)
 	{
 		if (strncmp(environ[i], name, _strlen(name)) == 0)
 		{
-			free(environ[i]);
+			_free(environ[i]);
 			found = 1;
 			break;
 		}
