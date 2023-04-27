@@ -7,10 +7,8 @@
  * @argv: pointer to strings to free
  * @stream: pointer to file stream
 */
-void free_resources(char *line, list_t *head_argv, char **argv, FILE *stream)
+void free_resources(list_t *head_argv, char **argv, FILE *stream)
 {
-	if (line != NULL)
-		free(line);
 	if (head_argv != NULL)
 		free_list(head_argv);
 	if (argv != NULL)

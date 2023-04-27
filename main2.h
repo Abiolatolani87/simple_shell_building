@@ -27,4 +27,7 @@ typedef struct tokenize_cmd_ops
 	char **ops_tokens;
 } cmd_ops;
 
+int is_only_spaces(char *s);
+void free_cmd_ops(cmd_ops *cls);
+
 #endif

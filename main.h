@@ -15,6 +15,7 @@
 
 extern char **argvalues;
 extern char **environ;
+extern char *line;
 int contains_log_operator(char *str);
 void trunc_comment(char *str);
 size_t print_list(const list_t *h);
@@ -57,14 +58,14 @@ char **store_str_ptrs(const list_t *h, char **ptrs_to_str);
 void interpret_dollar(char **str, int status);
 void create_child_process(int *status, char **argv);
 void execute_builtin_cmd(char **argv, int *status,
-			 char *line, list_t *head_argv, FILE *stream);
+			 list_t *head_argv, FILE *stream, char ***tokens);
 void handle_cd(int argv_count, char **argv, int *status);
 void handle_exit(int argv_count, char **argv,
-		 char *line, list_t *head_argv, FILE *stream);
+		 list_t *head_argv, FILE *stream, char ***tokens);
 void handle_setenv(int argv_count, char **argv, int *status);
 void handle_unsetenv(int argv_count, char **argv, int *status);
 void prompt_user(void);
-void free_resources(char *line, list_t *head_argv, char **argv, FILE *stream);
+void free_resources(list_t *head_argv, char **argv, FILE *stream);
 cmd_ops *parse_logical_ops(char *str);
 int starts_with_semicolon(char *str);
 int has_consecutive_semicolon(char *str);
