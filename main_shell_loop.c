@@ -121,6 +121,7 @@ void handle_parsed_line(char ***tokens, FILE *stream,
 				break;
 			}
 			execute_cmds_with_ops(ptr_to_cmd_ops, stream, status);
+			free_cmd_ops(ptr_to_cmd_ops);
 		}
 		else
 			handle_parsed_cmd(tokens, (*tokens)[i], stream, status);

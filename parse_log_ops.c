@@ -75,6 +75,9 @@ cmd_ops *parse_logical_ops(char *str)
 							ptr_to_cmd_tokens);
 	ptr_to_cmd_and_ops->ops_tokens = store_str_ptrs(ops_head, ptr_to_ops_tokens);
 
+	free_list(tokens_head);
+	free_list(ops_head);
+
 	return (ptr_to_cmd_and_ops);
 }
 
