@@ -18,7 +18,7 @@ int _setenv(const char *name, const char *value, int overwrite)
 
 	if (!name || !value)
 		return (-1);
-	new_env_str = malloc(new_env_var_len);
+	new_env_str = malloc(sizeof(char) * new_env_var_len);
 	if (!new_env_str)
 		return (-1);
 	_strcat(new_env_str, name);
@@ -32,6 +32,7 @@ int _setenv(const char *name, const char *value, int overwrite)
 				return (0);
 			strncpy(environ[i], new_env_str, new_env_var_len);
 			_free(new_env_str);
+			new_env_str = NULL;
 			return (0);
 		}
 		i++;
@@ -48,6 +49,5 @@ int _setenv(const char *name, const char *value, int overwrite)
 	environ = new_environ;
 	environ[environ_count] = new_env_str;
 	environ[environ_count + 1] = NULL;
-
 	return (0);
 }

@@ -46,6 +46,7 @@ int main(int ac, char **av)
 		handle_parsed_line(&strs_split_by_semicolon, stream, &status, av[0]);
 
 		free_list(head_main);
+		head_main = NULL;
 	}
 
 	printf("after typing exit\n");
@@ -67,8 +68,9 @@ void readline(char **line, FILE **stream, size_t *len, ssize_t *bytes)
 		if (isatty(fileno(stdin)))
 		{
 			custom_print(2, "\n");
-			free(*line);
 		}
+		free(*line);
+		/*free(line);*/
 		exit(1);
 	}
 }
@@ -118,6 +120,7 @@ void handle_parsed_line(char ***tokens, FILE *stream,
 		i++;
 	}
 	free_strings(*tokens);
+	*tokens = NULL;
 }
 
 /**
@@ -144,8 +147,9 @@ void handle_parsed_cmd(char ***tokens, char *str, FILE *stream, int *status)
 	{
 		create_child_process(status, cmds);
 	}
-	free_list(head_arvg);
+	/*free_list(head_arvg);*/
 	free_strings(cmds);
+	cmds = NULL;
 }
 
 /**

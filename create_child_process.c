@@ -47,6 +47,7 @@ void create_child_process(int *status, char **argv)
 			}
 		}
 		_free(file_fullpath);
+		file_fullpath = NULL;
 	}
 	/*free_allocated_memory(head_path, dirs);*/
 }

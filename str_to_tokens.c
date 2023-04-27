@@ -43,6 +43,7 @@ char **str_into_tokens(const char *str, char delim, list_t *head)
 	ptr_to_tokens = store_str_ptrs(head, ptr_to_tokens);
 
 	free_list(head);
+	head = NULL;
 
 	return (ptr_to_tokens);
 }

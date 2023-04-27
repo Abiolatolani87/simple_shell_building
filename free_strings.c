@@ -15,6 +15,6 @@ void free_strings(char **s)
 		free(s[i]);
 		i++;
 	}
-	free(s[i]);
+	/*free(s[i]);*/
 	free(s);
 }
