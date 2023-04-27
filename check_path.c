@@ -23,28 +23,27 @@ char *check_path(char *first_arg, char **dirs, list_t *head)
 		else
 			return (NULL);
 	}
-	else
+	path = _getenv("PATH");
+	dirs = str_into_tokens(path, ':', head);
+
+	length = _strlen(first_arg);
+
+	while (dirs[i] != NULL)
 	{
-		path = _getenv("PATH");
-		dirs = str_into_tokens(path, ':', head);
+		dirs[i] = realloc(dirs[i], _strlen(dirs[i]) + length + 2);
 
-		length = _strlen(first_arg);
+		_strcat(dirs[i], "/");
+		_strcat(dirs[i], first_arg);
 
-		while (dirs[i] != NULL)
+		if (path_exist(dirs[i]))
 		{
-			dirs[i] = realloc(dirs[i], _strlen(dirs[i]) + length + 2);
-
-			_strcat(dirs[i], "/");
-			_strcat(dirs[i], first_arg);
-
-			if (path_exist(dirs[i]))
-			{
-				file_fullpath = _strdup(dirs[i]);
-				return (file_fullpath);
-			}
-
-			i++;
+			file_fullpath = _strdup(dirs[i]);
+			break;
 		}
-		return (NULL);
+
+		i++;
 	}
+	free_list(head);
+	free_strings(dirs);
+	return (file_fullpath);
 }

@@ -15,5 +15,5 @@ void free_allocated_memory(list_t *head, char **strs)
 	free_list(head);
 
 	/* Free memory allocated for strs */
-	free(strs);
+	free_strings(strs);
 }
