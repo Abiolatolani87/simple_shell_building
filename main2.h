@@ -31,5 +31,7 @@ int is_only_spaces(char *s);
 void free_cmd_ops(cmd_ops *cls);
 void callback(int signum);
 void _free(char *s);
+void free_all(char **argv, list_t *head_argv, FILE *stream,
+	      char ***tokens, int exit_code);
 
 #endif
