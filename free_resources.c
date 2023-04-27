@@ -2,7 +2,6 @@
 
 /**
  * free_resources - free memory
- * @line: pointer to line to free
  * @head_argv: pointer to list to free
  * @argv: pointer to strings to free
  * @stream: pointer to file stream

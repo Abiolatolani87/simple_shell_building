@@ -21,7 +21,7 @@ char **str_into_tokens(const char *str, char delim, list_t *head)
 
 	while (*str != '\0')
 	{
-		while (*str == delim )
+		while (*str == delim)
 			str++;
 
 		if (*str == '\0' || *str == '\n')

@@ -29,5 +29,6 @@ typedef struct tokenize_cmd_ops
 
 int is_only_spaces(char *s);
 void free_cmd_ops(cmd_ops *cls);
+void callback(int signum);
 
 #endif

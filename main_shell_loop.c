@@ -6,7 +6,6 @@ void handle_parsed_line(char ***tokens, FILE *stream,
 void handle_parse_error(char *str, int *status);
 void handle_parsed_cmd(char ***tokens, char *str, FILE *stream, int *status);
 void execute_cmds_with_ops(cmd_ops *ptr_to_cmd_ops, FILE *stream, int *status);
-void callback(int signum);
 char **argvalues;
 char *line = NULL;
 /**
@@ -33,7 +32,8 @@ int main(int ac, char **av)
 			prompt_user();
 		readline(&line, &stream, &len, &bytes_read);
 
-		if (line == NULL || is_only_spaces(line) || *line == '#' || *line == '\n' || bytes_read == 0)
+		if (line == NULL || is_only_spaces(line) || *line == '#' ||
+		    *line == '\n' || bytes_read == 0)
 			continue;
 		trunc_comment(line);
 		strs_split_by_semicolon = parse_semicolon(line, head_main);
@@ -50,16 +50,6 @@ int main(int ac, char **av)
 
 	printf("after typing exit\n");
 	return (0);
-}
-
-/**
- * callback - callback function
- * @signum: signal number
-*/
-void callback(int signum)
-{
-	newputs("\n$ ");
-	(void)signum;
 }
 
 /**
@@ -132,6 +122,7 @@ void handle_parsed_line(char ***tokens, FILE *stream,
 
 /**
  * handle_parsed_cmd - split commands by space and execute
+ * @tokens: holds address of of array of tokens
  * @str: pointer to string to tokenize
  * @stream: input stream
  * @status: pointer to exit code
@@ -169,11 +160,11 @@ void execute_cmds_with_ops(cmd_ops *ptr_to_cmd_ops, FILE *stream, int *status)
 
 	while (ptr_to_cmd_ops->cmd_tokens[j] != NULL)
 	{
-		handle_parsed_cmd(&(ptr_to_cmd_ops->cmd_tokens), ptr_to_cmd_ops->cmd_tokens[j], stream, status);
+		handle_parsed_cmd(&(ptr_to_cmd_ops->cmd_tokens),
+				  ptr_to_cmd_ops->cmd_tokens[j], stream, status);
 		j++;
 		if (ptr_to_cmd_ops->ops_tokens[k] == NULL)
 			break;
-
 		if (*status == 0)
 		{
 			if (_strcmp(ptr_to_cmd_ops->ops_tokens[k], "&&") == 0)

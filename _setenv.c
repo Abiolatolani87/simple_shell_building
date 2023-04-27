@@ -29,10 +29,7 @@ int _setenv(const char *name, const char *value, int overwrite)
 		if (strncmp(environ[i], name, _strlen(name)) == 0)
 		{
 			if (!overwrite)
-			{
-				free(new_env_str);
 				return (0);
-			}
 			strncpy(environ[i], new_env_str, new_env_var_len);
 			free(new_env_str);
 			return (0);

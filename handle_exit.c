@@ -4,9 +4,9 @@
  * handle_exit - execute exit builtin
  * @argv_count: number of arguments
  * @argv: pointer to strings
- * @line: pointer to command
  * @head_argv: pointer to list
  * @stream: pointer to input stream
+ * @tokens: holds address of of array of tokens
 */
 void handle_exit(int argv_count, char **argv,
 		 list_t *head_argv, FILE *stream, char ***tokens)
