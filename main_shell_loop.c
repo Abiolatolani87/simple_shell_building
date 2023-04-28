@@ -62,16 +62,18 @@ int main(int ac, char **av)
  */
 void readline(char **line, FILE **stream, size_t *len, ssize_t *bytes)
 {
+	int exit_code = 0;
 	*bytes = getline(line, len, *stream);
 	if (*bytes == -1)
 	{
 		if (isatty(fileno(stdin)))
 		{
 			custom_print(2, "\n");
+			exit_code = 1;
 		}
 		free(*line);
 		/*free(line);*/
-		exit(1);
+		exit(exit_code);
 	}
 }
 
