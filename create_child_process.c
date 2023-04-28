@@ -34,6 +34,7 @@ void create_child_process(int *status, char **argv)
 			if (execve(file_fullpath, argv, environ) == -1)
 			{
 				perror(argv[0]);
+				*status = 2;
 				exit(2);
 			}
 			*status = 0;
