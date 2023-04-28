@@ -27,7 +27,7 @@ void create_child_process(int *status, char **argv)
 		if (child_pid == -1)
 		{
 			perror("Error");
-			exit(1);
+			exit(2);
 		}
 		if (child_pid == 0)
 		{
