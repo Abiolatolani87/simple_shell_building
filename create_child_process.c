@@ -44,13 +44,13 @@ void create_child_process(int *status, char **argv)
 			if (wait(status) == -1)
 			{
 				perror("Error");
+				*status = 2;
 				exit(2);
 			}
 		}
 		_free(file_fullpath);
 		file_fullpath = NULL;
 	}
-	/*free_allocated_memory(head_path, dirs);*/
 }
 
 /**
