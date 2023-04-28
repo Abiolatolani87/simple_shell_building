@@ -19,7 +19,7 @@ void handle_setenv(int argv_count, char **argv, int *status)
 	}
 	else
 	{
-		if ((_setenv(argv[1], argv[2], 1)) == -1)
+		if ((setenv(argv[1], argv[2], 1)) == -1)
 		{
 			_puts("command invoked cannot execute");
 			*status = 126;

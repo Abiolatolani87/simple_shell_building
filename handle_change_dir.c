@@ -69,8 +69,8 @@ void handle_error(char *str_1, char *str_2, int *status)
 */
 void set_old_new_pwd(char *old_dir, char *new_dir, int *status)
 {
-	_setenv("OLDPWD", old_dir, 1);
-	_setenv("PWD", new_dir, 1);
+	setenv("OLDPWD", old_dir, 1);
+	setenv("PWD", new_dir, 1);
 	*status = 0;
 }
 
