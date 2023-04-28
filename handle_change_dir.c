@@ -56,6 +56,8 @@ void handle_cd(int argv_count, char **argv, int *status)
 */
 void handle_error(char *str_1, char *str_2, int *status)
 {
+	(void)str_1;
+	(void)str_2;
 	/*perror(str_1);*/
 	/*perror(str_2);*/
 	*status = 0;
@@ -81,6 +83,7 @@ void set_old_new_pwd(char *old_dir, char *new_dir, int *status)
 */
 void handle_usage_error(char *str, int *status)
 {
+	(void)str;
 	/*custom_print(2, "%s:usage: %s [DIRECTORY]", str, str);*/
 	*status = 0;
 }
