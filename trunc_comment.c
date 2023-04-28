@@ -12,7 +12,11 @@ void trunc_comment(char *str)
 	while (str[i] != '\0')
 	{
 		if (str[i] == '#')
+		{
+			if (i != 0 && !isspace(str[i - 1]))
+				return;
 			str[i] = '\0';
+		}
 		i++;
 	}
 }

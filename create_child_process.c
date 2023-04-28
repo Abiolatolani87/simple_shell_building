@@ -37,7 +37,7 @@ void create_child_process(int *status, char **argv)
 				*status = 2;
 				exit(2);
 			}
-			/**status = 0;*/
+			*status = 0;
 		}
 		else
 		{
