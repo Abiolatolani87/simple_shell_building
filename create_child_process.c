@@ -43,7 +43,7 @@ void create_child_process(int *status, char **argv)
 			if (wait(status) == -1)
 			{
 				perror("Error");
-				exit(1);
+				exit(2);
 			}
 		}
 		_free(file_fullpath);
