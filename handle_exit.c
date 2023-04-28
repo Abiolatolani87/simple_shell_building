@@ -20,7 +20,7 @@ void handle_exit(int argv_count, char **argv,
 	}
 	else if (argv_count == 1)
 	{
-		custom_print(2, "exit\n");
+		/*custom_print(2, "exit\n");*/
 		free_all(argv, head_argv, stream, tokens, 0);
 	}
 	else
