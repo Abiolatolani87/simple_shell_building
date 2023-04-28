@@ -19,7 +19,7 @@ char *check_path(char *first_arg, char **dirs, list_t *head)
 		if (end_with_forward_slash(first_arg))
 			return (NULL);
 		if (path_exist(first_arg))
-			return (first_arg);
+			return (_strdup(first_arg));
 		else
 			return (NULL);
 	}
